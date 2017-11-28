@@ -1,15 +1,32 @@
 <!doctype html>
-<html>
+<html lang="en">
+
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Databases and Developers</title>
+
+		<meta name="description" content="Talk on databases and being a developer given at Metis - Chicago, by Kyle Tolle.">
+		<meta name="author" content="Kyle Tolle">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
 
-		<!-- Theme used for syntax highlighting of code -->
+<style>
+.reveal code {
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #444;
+  padding: 0px 4px;
+}
+</style>
+
+		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 
 		<!-- Printing and PDF exports -->
@@ -20,30 +37,1123 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
 	</head>
+
 	<body>
+
 		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+
+        <section>
+<h1 id="databases-and-developers">Databases and Developers</h1>
+
+<p>SELECT * FROM exciting_knowledge;</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>First off</p>
+
+<h2 id="ask-questions">Ask questions</h2>
+
+<h3 id="at-any-time">at any time!</h3>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="who-am-i">Who am I?</h2>
+
+<h1 id="kyle-tolle">Kyle Tolle</h1>
+
+<p><a href="http://kyletolle.com">kyletolle.com</a> |
+<a href="https://twitter.com/kyletolle">@kyletolle</a></p>
+
+<p>Software Engineer on Sabbatical</p>
+
+<aside class="notes">
+
+Member of the software industry for 8 years.
+
+</aside>
+</section>
+<section>
+
+<h3 id="not-a-database-expert">Not a database expert</h3>
+
+<p>but I want to</p>
+
+<h2 id="share">share</h2>
+
+<p>some of what</p>
+
+<h2 id="ive-learned">I’ve learned</h2>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="slides-for-this-talk">Slides for this talk</h2>
+
+<h3 id="presentation">Presentation:</h3>
+
+<p><a href="https://kyletolle.github.io/dbs_and_devs_talk">https://kyletolle.github.io/dbs_and_devs_talk</a></p>
+
+<h3 id="code">Code:</h3>
+
+<p><a href="https://github.com/kyletolle/dbs_and_devs_talk">https://github.com/kyletolle/dbs_and_devs_talk</a></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="past-jobs">Past Jobs</h1>
+
+<ul>
+  <li>tools supporting satellite simulation</li>
+  <li>ICBM command and control system</li>
+  <li>geospatial data collection</li>
+  <li>mobile wallet applications</li>
+</ul>
+
+<aside class="notes">
+
+mobile wallet includes things like order-ahead, loyalty, coupons for large restaurant chains.
+These jobs are diverse but they all had something in common: using databases.
+
+</aside>
+</section>
+<section>
+
+<h1 id="overview">Overview</h1>
+
+<ul>
+  <li>…</li>
+  <li>…</li>
+  <li>Fill this out more after the talk has taken shape</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Let’s start at</p>
+
+<h2 id="the-very-beginning">The Very Beginning</h2>
+
+<aside class="notes">
+
+Sometimes we hop into the middle of things, and it's good to think back on the beginning and understand the context in which things came about.
+
+</aside>
+</section>
+<section>
+
+<h3 id="humans-are">Humans are</h3>
+
+<h2 id="knowledge-hunters">knowledge-hunters</h2>
+
+<p>&amp;</p>
+
+<h2 id="data-gatherers">data-gatherers</h2>
+
+<aside class="notes">
+
+We take in the world as it is and can see it how it will be later.
+We see a line on the ground and know a deer walks here often.
+Then we wait there, because we know we will see the deer in the future.
+
+</aside>
+</section>
+<section>
+
+<h2 id="we-like-to">We like to</h2>
+
+<ul>
+  <li>Collect data</li>
+  <li>Store it</li>
+  <li>Process it</li>
+</ul>
+
+<aside class="notes">
+
+We gather information from the world around us and do a lot with it.
+
+</aside>
+</section>
+<section>
+
+<p>Over time, we</p>
+
+<h2 id="streamline">streamline</h2>
+
+<p>&amp;</p>
+
+<h2 id="refine">refine</h2>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>We have developed</p>
+
+<h2 id="hardware">hardware</h2>
+
+<p>&amp;</p>
+
+<h2 id="software">software</h2>
+
+<aside class="notes">
+
+to help us think more quickly.
+
+</aside>
+</section>
+<section>
+
+<h2 id="software-crunches">Software crunches</h2>
+
+<h1 id="data">data</h1>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="data-needs">Data needs</h2>
+
+<h1 id="a-home">a home</h1>
+
+<aside class="notes">
+
+In order to do something useful with software, we need data.
+We need to store that data somewhere.
+That somewhere is usually databases.
+
+</aside>
+</section>
+<section>
+
+<h2 id="aka">a.k.a.</h2>
+
+<h1 id="a-data-store">A Data Store</h1>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="what-kinds">What kinds</h2>
+
+<p>of data stores</p>
+
+<p>are there?</p>
+
+<aside class="notes">
+
+We will talk about a few types, but let's start with one.
+One of the simplest.
+
+</aside>
+</section>
+<section>
+
+<h1 id="flat-files">Flat Files*</h1>
+
+<p>The humble beginnings</p>
+
+<aside class="notes">
+
+On computers, at least.
+
+</aside>
+</section>
+<section>
+
+<p><code>$ cat students.csv</code></p>
+
+<pre><code>Id, Name, Grade
+1,  Ted,  B
+2,  Stan, A-
+3,  Fred, C++
+4,  Ned,  5%
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="easy-peasy">Easy peasy</h2>
+
+<p>File lives on my computer</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>This is a</p>
+
+<h3 id="valid-strategy">valid strategy</h3>
+
+<aside class="notes">
+
+I access it when I need it.
+Some things don't need to be complicated.
+
+</aside>
+</section>
+<section>
+
+<h3 id="flat-files">Flat Files</h3>
+
+<p>can be used for</p>
+
+<h2 id="data-interchange">Data Interchange</h2>
+
+<aside class="notes">
+
+Passing data between systems
+
+</aside>
+</section>
+<section>
+
+<h2 id="common-flat-file-types">Common flat file types</h2>
+
+<ul>
+  <li>CSV</li>
+  <li>HTML</li>
+  <li>XML</li>
+  <li>JSON</li>
+  <li>ini</li>
+  <li>conf</li>
+</ul>
+
+<aside class="notes">
+
+Flat files allow us to pass data between systems.
+They allow us to store simple information when anything more complex would be overkill.
+
+</aside>
+</section>
+<section>
+
+<p>Then, things grow</p>
+
+<h2 id="complicated">Complicated</h2>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Want to</p>
+
+<h2 id="know-more">know more</h2>
+
+<h3 id="about-the-data">about the data</h3>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Want to</p>
+
+<h2 id="ask-questions">ask questions</h2>
+
+<h3 id="of-it">of it</h3>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Want to</p>
+
+<h2 id="give-access">give access</h2>
+
+<h3 id="to-it">to it</h3>
+
+<aside class="notes">
+
+Want to give access to multiple people or programs.
+
+</aside>
+</section>
+<section>
+
+<ul>
+  <li>Web application</li>
+  <li>Report generation</li>
+  <li>Analysis performation</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Some smart folks</p>
+
+<h2 id="invented-the">invented the</h2>
+
+<h1 id="database">database</h1>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="data-organization-on">Data organization on</h2>
+
+<h1 id="steroids">steroids</h1>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>In 1970, E.F. Codd described the</p>
+
+<h2 id="relational-modelhttpsenwikipediaorgwikirelationalmodel"><a href="https://en.wikipedia.org/wiki/Relational_model">Relational Model</a></h2>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="relational-model">Relational Model</h2>
+
+<p><img src="./relational_model_concepts.png" alt="Relational Model Concepts" />*</p>
+
+<p><br /></p>
+
+<p><small>*: By <a href="//commons.wikimedia.org/wiki/User:AutumnSnow" title="User:AutumnSnow">User:AutumnSnow</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=1313684">Link</a><small></small></small></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>This is the foundation for the</p>
+
+<h1 id="relational-database">Relational Database</h1>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>We interact with a</p>
+
+<h3 id="relational-database">Relational Database</h3>
+
+<p>using</p>
+
+<h1 id="sql">SQL</h1>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="sql-is-a-abbr-titledomain-specific-languagedslabbr">SQL is a <abbr title="domain-specific language">DSL</abbr></h1>
+
+<p>for managing data</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="sql-is-an-abbr-titleapplication-programming-interfaceapiabbr">SQL is an <abbr title="application programming interface">API</abbr></h1>
+
+<p>for managing data</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Remember that student data</p>
+
+<p>we had earlier?</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<pre><code>Id, Name, Grade
+1,  Ted,  B
+2,  Stan, A-
+3,  Fred, C++
+4,  Ned,  5%
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="put-a-database-on-it">Put a database on it</h2>
+
+<p><img src="./put_a_bird_on_it.jpg" alt="Put a bird on it" /></p>
+
+<aside class="notes">
+
+Portlandia!
+
+</aside>
+</section>
+<section>
+
+<p>We have a</p>
+
+<h1 id="table">Table</h1>
+
+<p>with</p>
+
+<h2 id="rows--columns">Rows &amp; Columns</h2>
+
+<aside class="notes">
+
+Let's simplify the Relational Model terms
+
+</aside>
+</section>
+<section>
+
+<p>This leads us to our</p>
+
+<h1 id="database-schema">Database Schema</h1>
+
+<aside class="notes">
+
+This is a formal definition of our data.
+
+</aside>
+</section>
+<section>
+
+<h1 id="table">Table</h1>
+
+<p>The name of the collection of our data</p>
+
+<p><code>Students</code></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="row">Row</h1>
+
+<p>Each individual student’s data</p>
+
+<pre><code>1, Ted, B
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="column">Column</h1>
+
+<p>An attribute of the student</p>
+
+<pre><code>Grade
+B
+A-
+C++
+5%
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="todo-left-off-here">TODO: LEFT OFF HERE!</h1>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Web applications typically start using a SQL database</p>
+
+<p>May migrate to something more complex as they grow</p>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+<p>-</p>
+
+<ul>
+  <li>You’ll use SQL during your career.</li>
+  <li>It’s used for setting up applications, analytics, etc</li>
+  <li>Applications will likely start out with SQL and then portions will migrate to more complex setups as they grow and require it.</li>
+</ul>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>First, a little background</p>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Simple databases</p>
+
+<p>Flat files</p>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="links">Links</h2>
+
+<ul>
+  <li><a href="https://en.wikipedia.org/wiki/Flat_file_database">Flat files</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Relational_model">Relational model</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Relational_database">Relational database</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/SQL">SQL</a></li>
+</ul>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<ul>
+  <li>Databases
+    <ul>
+      <li>Relational
+        <ul>
+          <li>Schemas
+            <ul>
+              <li>Tables
+                <ul>
+                  <li>https://en.wikipedia.org/wiki/Table_(database)</li>
+                  <li>Columns</li>
+                  <li>Rows (also called records)</li>
+                </ul>
+              </li>
+              <li>Fields
+                <ul>
+                  <li>https://en.wikipedia.org/wiki/Field_(computer_science)</li>
+                </ul>
+              </li>
+              <li>Indexes</li>
+              <li>Relationships</li>
+              <li>Views
+                <ul>
+                  <li>https://en.wikipedia.org/wiki/View_(SQL)</li>
+                  <li>A query is stored and then the results are calculated at run-time.</li>
+                  <li>Can represent a subset of a much larger table</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>Queries</li>
+        </ul>
+      </li>
+      <li>Database management system
+        <ul>
+          <li>https://en.wikipedia.org/wiki/Database</li>
+          <li>
+            <blockquote>
+              <p>A general-purpose DBMS allows the definition, creation, querying, update, and administration of databases.</p>
+            </blockquote>
+          </li>
+        </ul>
+      </li>
+      <li>Relational DBMS
+        <ul>
+          <li>
+            <h2 id="httpsenwikipediaorgwikirelationaldatabasemanagementsystem">https://en.wikipedia.org/wiki/Relational_database_management_system</h2>
+          </li>
+        </ul>
+      </li>
+      <li>CAP Theorem
+        <ul>
+          <li>https://en.wikipedia.org/wiki/CAP_theorem</li>
+          <li>When you use network partitioning, you must choose between consistency and availability.</li>
+          <li>https://en.wikipedia.org/wiki/Distributed_data_store</li>
+          <li>Information is stored on more than one node, using replication</li>
+        </ul>
+      </li>
+      <li>ACID (Atomicity, Consistency, Isolation, Durability)
+        <ul>
+          <li>https://en.wikipedia.org/wiki/ACID</li>
+        </ul>
+      </li>
+      <li>BASE (Basically Available, Soft state, Eventual consistency)
+        <ul>
+          <li>https://en.wikipedia.org/wiki/Eventual_consistency</li>
+        </ul>
+      </li>
+      <li>CRUD
+        <ul>
+          <li>Create, Read, Update, Delete</li>
+        </ul>
+      </li>
+      <li>Transactions
+        <ul>
+          <li>https://en.wikipedia.org/wiki/Database_transaction</li>
+          <li>https://en.wikipedia.org/wiki/Commit_(data_management)</li>
+          <li>Example of a transaction</li>
+          <li><code>BEGIN WORK</code> - Marks the beginning of a transaction</li>
+          <li>Issue one or more SQL commands
+            <ul>
+              <li>Issue <code>UPDATE</code> command to modify a row</li>
+              <li>Issue <code>UPDATE</code> command to modify another row</li>
+            </ul>
+          </li>
+          <li><code>COMMIT</code> - Marks the success and the end of a transaction</li>
+        </ul>
+      </li>
+      <li>Rollbacks
+        <ul>
+          <li>If an error happens in the middle of one of those SQL commands, a <code>ROLLBACK</code> is issues, which reverts all those changes.</li>
+          <li>In a transaction, either all the commands pass and are applied or they all fail and nothing happens.</li>
+          <li>https://en.wikipedia.org/wiki/Rollback_(data_management)#SQL</li>
+          <li><code>BEGIN WORK</code> - Marks the beginning of a transaction</li>
+          <li>Issue one or more SQL commands
+            <ul>
+              <li>Issue <code>UPDATE</code> command to modify a row</li>
+              <li>Issue <code>UPDATE</code> command to modify another row - But this one fails</li>
+            </ul>
+          </li>
+          <li><code>ROLLBACK</code> - Marks the failure and the end of the transaction, reverts the changes</li>
+        </ul>
+      </li>
+      <li>Savepoints
+        <ul>
+          <li>Allow you to roll back a portion of a transaction.</li>
+          <li>Allow implementing complex error recovery in database application</li>
+        </ul>
+      </li>
+      <li>Constraints</li>
+      <li>Unique key - A column or set of columns which are guaranteed to be unique in the table
+        <ul>
+          <li>https://en.wikipedia.org/wiki/Unique_key</li>
+          <li>Primary key is the key other entity (row in another table) can use to reference this entity.</li>
+          <li>A simple table will have a primary key that is an automatically-increasing integer called <code>id</code></li>
+          <li>No two rows (entities) will have the same <code>id</code></li>
+        </ul>
+      </li>
+      <li>Foreign key
+        <ul>
+          <li>https://en.wikipedia.org/wiki/Foreign_key</li>
+          <li>Uniquely identifies a row in another table or in this table</li>
+          <li>Why might you want to reference another row in the same table?</li>
+          <li>To allow parent-child relationships.</li>
+        </ul>
+      </li>
+      <li>Types of databases
+        <ul>
+          <li>NoSQL (Mongo)
+            <ul>
+              <li>https://en.wikipedia.org/wiki/NoSQL</li>
+            </ul>
+          </li>
+          <li>SQL (MySQL)
+            <ul>
+              <li>https://en.wikipedia.org/wiki/SQL</li>
+            </ul>
+          </li>
+          <li>Key-Value (Redis)</li>
+          <li>Centralized?
+            <ul>
+              <li>https://en.wikipedia.org/wiki/Centralized_database</li>
+              <li>Good data integrity</li>
+              <li>Bottlenecks with high traffic</li>
+            </ul>
+          </li>
+          <li>Distributed (Mongo)</li>
+          <li>https://en.wikipedia.org/wiki/Centralized_database#Centralised_databases_vs._Distributed_databases</li>
+          <li>Peer to Peer (BitTorrent)</li>
+          <li>Sqlite</li>
+          <li>Flat-file
+            <ul>
+              <li>https://en.wikipedia.org/wiki/Flat_file_database</li>
+              <li>CSV is an example</li>
+              <li>Plain text</li>
+              <li>Binary</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Brands of SQL DBs
+        <ul>
+          <li>Oracle, MySQL, Postgres</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Basic Database Design</li>
+  <li>How to work with Databases</li>
+  <li>It’s helpful to do things by hand first.</li>
+  <li>Then you understand the benefits that software tools give you.</li>
+  <li>Software to interact with databases
+    <ul>
+      <li>Rails
+        <ul>
+          <li>Rails can create DBs for you when creating a new project.</li>
+          <li>Can customize things</li>
+          <li>DB adapters</li>
+        </ul>
+      </li>
+      <li>ORM
+        <ul>
+          <li>Object Relational Mapping.</li>
+          <li>Rails follows the Active record pattern</li>
+          <li>https://en.wikipedia.org/wiki/Active_record_pattern</li>
+          <li>https://www.martinfowler.com/eaaCatalog/activeRecord.html</li>
+          <li>
+            <blockquote>
+              <p>An object that wraps a row in a database table or view, encapsulates the database access, and adds domain logic on that data.</p>
+            </blockquote>
+          </li>
+          <li>Martin Fowler</li>
+          <li>In fact, the library that handles this stuff is called <code>ActiveRecord</code></li>
+          <li>http://guides.rubyonrails.org/active_record_basics.html</li>
+          <li>Abstract the SQL behind a domain-specific language (DSL)</li>
+          <li>Make working with the database easier</li>
+          <li>Dynamically reads the tables and their columns and creates SQL queries on the fly</li>
+          <li>The ORM inflates the data from the DB into an object and its attributes</li>
+          <li>This can take a decent bit of time for a complex object with a lot of attributes</li>
+          <li>Some complex or advanced things aren’t always possible, so knowing the SQL you need to write can help you get the job done.</li>
+          <li>Understanding the limits of your tools</li>
+          <li>Still need to understand what the query you want should look like</li>
+          <li>Helps you avoid N+1 query explosions</li>
+          <li>The performance might not be what you need for processing data in bulk</li>
+          <li>Dynamically generating the query is slower than having one hardcoded, but it’s a tradeoff. Hardcoding a query can make your application more fragile to changes in the future, whereas the dynamic queries will update themselves as things change and the ORM picks up those changes. A hardcoded query might refer to a column that was renamed, for instance.</li>
+          <li>This is qhere something like Sequel is nice, because it gives you the raw data</li>
+        </ul>
+      </li>
+      <li>It is worth doing things the “hard way” first.
+        <ul>
+          <li>Without the ORM</li>
+          <li>Without Hadoop</li>
+          <li>Without the ML library</li>
+          <li>You can learn the basics</li>
+          <li>Learn what the libraries solve for you</li>
+          <li>Also learn the limitations of the libraries</li>
+          <li>Know how to get around the limitations when you need to.</li>
+        </ul>
+      </li>
+      <li>Other gems like Sequel</li>
+      <li>Database migrations at the application level
+        <ul>
+          <li>Migrating the database is tricky.</li>
+          <li>Need to be consistent.</li>
+          <li>Need to do it across many machines (many developers)</li>
+          <li>Need to do it differently in different environments
+            <ul>
+              <li>PRD has multiple DBs whereas DEV has one local DB.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Your Data
+    <ul>
+      <li>Indexes
+        <ul>
+          <li>Pros and Cons</li>
+          <li>Take up space</li>
+          <li>Increase write times</li>
+          <li>Make reads fast</li>
+        </ul>
+      </li>
+      <li>Duplication of data</li>
+      <li>Data integrity
+        <ul>
+          <li>https://en.wikipedia.org/wiki/Data_integrity#Databases</li>
+        </ul>
+      </li>
+      <li>Application-level integrity vs Database-level integrity</li>
+      <li>Permissions on tables</li>
+      <li>Normalizing
+        <ul>
+          <li>http://searchsqlserver.techtarget.com/definition/normalization</li>
+          <li>https://en.wikipedia.org/wiki/Database_normalization</li>
+          <li>https://en.wikipedia.org/wiki/Boyce%E2%80%93Codd_normal_form</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Security
+    <ul>
+      <li>Data sanitization</li>
+      <li>Some is by default, but other things the dev must keep in mind, especially when creating queries on their own.</li>
+      <li>SQL injection</li>
+      <li>How ORMs can help with this</li>
+    </ul>
+  </li>
+  <li>Other
+    <ul>
+      <li>Stored Procedures</li>
+      <li>Putting created_at and updated_at columns on a table.
+        <ul>
+          <li>This can be automatically managed by Rails</li>
+          <li>Helps you know when things were updated last, which is really helpful when diagnosing bugs</li>
+        </ul>
+      </li>
+      <li>Join tables</li>
+      <li>Database locks
+        <ul>
+          <li>Row level</li>
+          <li>Table level</li>
+        </ul>
+      </li>
+      <li>Adding colums
+        <ul>
+          <li>Adding a column to a large table can lock the entire table for a long time</li>
+          <li>This can cause timeouts in an application</li>
+          <li>Multi-step migrations can help</li>
+          <li>Add a column that is allowed to be null.</li>
+          <li>The table-lock is over quickly</li>
+          <li>Then go through and populate all the rows in the table.</li>
+          <li>Row locks help keep the table from being unresponsive and are released often</li>
+          <li>Then update the table to not allow null values.</li>
+        </ul>
+      </li>
+      <li>Triggers
+        <ul>
+          <li>https://en.wikipedia.org/wiki/Database_trigger</li>
+        </ul>
+      </li>
+      <li>Views</li>
+      <li>Data anlytics
+        <ul>
+          <li>Generating reports from the data</li>
+          <li>Running custom queries to answer questions from clients</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Scaling
+    <ul>
+      <li>Nodes</li>
+      <li>Replication</li>
+      <li>Master/Slave</li>
+      <li>Partitions</li>
+      <li>Fault tolerance</li>
+      <li>Backups</li>
+      <li>Self-hosted vs cloud</li>
+    </ul>
+  </li>
+</ul>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="so-im-here">So I’m here</h2>
+
+<p>to talk about databases</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="but-first">But first</h2>
+
+<p>we need some background</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="lets-start-with">Let’s start with</h2>
+
+<p>what we know</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="database-recap">Database Recap</h2>
+
+<ul>
+  <li>…</li>
+  <li>…</li>
+  <li>…</li>
+  <li>…</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="other-things-to-think-about">Other things to think about</h2>
+
+<ul>
+  <li>…</li>
+  <li>…</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="whats-next">What’s Next?</h2>
+
+<ul>
+  <li>Where can you learn more?
+    <ul>
+      <li>Khan Academy?</li>
+      <li>https://www.khanacademy.org/computing/computer-programming/sql/sql-basics/v/welcome-to-sql</li>
+    </ul>
+  </li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="links-to-code">Links to Code</h2>
+
+<ul>
+  <li>…</li>
+</ul>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="thanks">Thanks!</h1>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+
+
 			</div>
+
 		</div>
 
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.js"></script>
 
 		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'none', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
 				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
 				]
 			});
+
 		</script>
+
 	</body>
 </html>
