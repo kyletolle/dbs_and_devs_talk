@@ -53,7 +53,7 @@
         <section>
 <h1 id="databases-and-developers">Databases and Developers</h1>
 
-<p>SELECT * FROM exciting_knowledge;</p>
+<p><code>SELECT * FROM exciting_knowledge;</code></p>
 
 <aside class="notes">
 
@@ -549,7 +549,8 @@ INSERT INTO students (name, grade) values ('Ned', '5%');
 
 <h2 id="view-data">View Data</h2>
 
-<p><code>SELECT * FROM students;</code></p>
+<pre><code>SELECT * FROM students;
+</code></pre>
 
 <pre class="text"><code> id | name | grade
 ====+======+=======
@@ -598,7 +599,8 @@ INSERT INTO backpacks (color, student_id) values('clear', 1);
 
 <h2 id="view-data">View Data</h2>
 
-<p><code>SELECT * FROM backpacks;</code></p>
+<pre><code>SELECT * FROM backpacks;
+</code></pre>
 
 <pre class="text"><code> id | color | student_id
 ====+=======+============
@@ -792,7 +794,7 @@ rbenv global 2.4.2
 
 <h1 id="install-rails">Install Rails</h1>
 
-<pre><code>gem install rails
+<pre class="sh"><code>gem install rails
 rails --version
 </code></pre>
 
@@ -808,7 +810,7 @@ rails --version
 
 <h1 id="create-rails-app">Create Rails app</h1>
 
-<pre><code>rails new blog
+<pre class="sh"><code>rails new blog
 cd blog
 </code></pre>
 
