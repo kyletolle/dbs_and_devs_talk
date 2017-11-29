@@ -500,39 +500,13 @@ Portlandia!
 </section>
 <section>
 
-<h2 id="install-postgres">Install Postgres</h2>
+<h1 id="set-up-postgres">Set up Postgres</h1>
 
-<p><code>brew install postgres</code></p>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<h2 id="start-postgres">Start Postgres</h2>
-
-<p><code>brew services start postgresql</code></p>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<h2 id="create-a-db">Create a DB</h2>
-
-<p><code>createdb dbs_and_devs_talk</code></p>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<h2 id="connect-to-the-db">Connect to the DB</h2>
-
-<p><code>psql dbs_and_devs_talk</code></p>
+<pre><code>brew install postgres
+brew services start postgresql
+createdb dbs_and_devs_talk
+psql dbs_and_devs_talk
+</code></pre>
 
 <aside class="notes">
 
@@ -570,11 +544,30 @@ INSERT INTO students (name, grade) values ('Ned', '5%');
 </section>
 <section>
 
-<h1 id="view-data">View Data</h1>
+<h2 id="view-data">View Data</h2>
 
 <p><code>SELECT * FROM students;</code></p>
 
 <p><img src="./select_from_students.png" alt="Query result" /></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="create-a-relationship">Create a Relationship</h2>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="quit-postgres">Quit Postgres</h2>
+
+<p><code>\q</code></p>
 
 <aside class="notes">
 
@@ -664,6 +657,8 @@ Great for managing the database without typing everything yourself.
 
 <aside class="notes">
 
+Inflates the DB data into an instantiated class
+
 </aside>
 </section>
 <section>
@@ -680,26 +675,836 @@ Great for managing the database without typing everything yourself.
 </section>
 <section>
 
+<h1 id="install-ruby">Install Ruby</h1>
+
+<pre><code>brew install rbenv
+rbenv install 2.4.2
+rbenv global 2.4.2
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="ensure-sqlite3httpswwwsqliteorg-is-installed">Ensure <a href="https://www.sqlite.org/">SQLite3</a> is installed</h2>
+
+<p><code>sqlite3 --version</code></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="install-rails">Install Rails</h1>
+
+<pre><code>gem install rails
+rails --version
+</code></pre>
+
+<p><br /></p>
+
+<p><small>We expect to see <code>Rails 5.1.4</code></small></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="create-rails-app">Create Rails app</h1>
+
+<pre><code>rails new blog
+cd blog
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="create-posts">Create Posts</h1>
+
+<pre><code>rails generate scaffold Post title:string body:text
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="run-db-migration">Run db migration</h1>
+
+<pre><code>rails db:migrate
+</code></pre>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="enter-ruby-console">Enter Ruby console</h2>
+
+<p><code>rails console</code></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="active-record-is-a-dsl">Active Record is a DSL</h2>
+
+<p>We can modify SQL data with it</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="create-a-new-post">Create a new post</h1>
+
+<pre><code>Post.create title: 'First!', body: 'Viral to the max.'
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>The console shows us</p>
+
+<h2 id="sql-queries">SQL queries</h2>
+
+<p>for various</p>
+
+<h2 id="active-record-methods">Active Record methods</h2>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="output-for-create">Output for create</h2>
+
+<pre><code>(0.1ms)  begin transaction
+SQL (0.4ms)  INSERT INTO "posts"
+  ("title", "body", "created_at", "updated_at")
+  VALUES (?, ?, ?, ?)
+  [
+    ["title", "First!"],
+    ["body", "Viral to the max."],
+    ["created_at", "2017-11-29 01:37:50.231847"],
+    ["updated_at", "2017-11-29 01:37:50.231847"]
+  ]
+(0.7ms)  commit transaction
+=&gt; #&lt;Post id: 1, title: "First!",
+     body: "Viral to the max.",
+     created_at: "2017-11-29 01:37:50",
+     updated_at: "2017-11-29 01:37:50"&gt;
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="lets-break-it-down">Let’s break it down</h2>
+
+<ul>
+  <li>Transactions</li>
+  <li>Queries</li>
+  <li>Duration</li>
+  <li>Conventions</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="transactionshttpsenwikipediaorgwikidatabasetransaction"><a href="https://en.wikipedia.org/wiki/Database_transaction">Transactions</a></h1>
+
+<pre><code>(0.1ms)  begin transaction
+...
+(0.7ms)  commit transaction
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Multiple queries either</p>
+
+<h2 id="all-happen">all happen</h2>
+
+<p>or</p>
+
+<h2 id="none-happen">none happen</h2>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>An error in a query causes a</p>
+
+<h2 id="rollback">Rollback</h2>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Provides protection from</p>
+
+<h2 id="errors">Errors</h2>
+
+<p>causing</p>
+
+<h2 id="inconsistent-data">Inconsistent Data</h2>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Important when</p>
+
+<h2 id="modifying-many-records">modifying many records</h2>
+
+<p>in</p>
+
+<h2 id="one-logical-change">one logical change</h2>
+
+<aside class="notes">
+
+Like transferring money from one bank account to another.
+One must be credited and the other must be debited at the same time.
+Either both get updated or neither do.
+
+</aside>
+</section>
+<section>
+
+<h1 id="queries">Queries</h1>
+
+<pre><code>SQL (0.4ms)  INSERT INTO "posts"
+  ("title", "body", "created_at", "updated_at")
+  VALUES (?, ?, ?, ?)
+  [
+    ["title", "First!"],
+    ["body", "Viral to the max."],
+    ["created_at", "2017-11-29 01:37:50.231847"],
+    ["updated_at", "2017-11-29 01:37:50.231847"]
+  ]
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="dynamically-generated">Dynamically generated</h2>
+
+<p>Active Record analyses the table and</p>
+
+<p>generates the correct query</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="duration">Duration</h1>
+
+<pre><code>SQL (0.4ms)  INSERT INTO "posts" ...
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Active Record measures</p>
+
+<h2 id="how-long">how long</h2>
+
+<p>each query takes to run</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Can help</p>
+
+<h2 id="profile-queries">profile queries</h2>
+
+<p>and find slow ones</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="conventions">Conventions</h1>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="naming">Naming</h2>
+
+<p>Table name (<code>posts</code>) is pluralized</p>
+
+<p>Class name (<code>Post</code>) is singular</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Handles</p>
+
+<h2 id="complex-cases">complex cases</h2>
+
+<p>like</p>
+
+<h3 id="people--person"><code>people</code> &amp; <code>Person</code></h3>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="timestamps">Timestamps</h2>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Notice the</p>
+
+<h3 id="updatedat--createdat"><code>updated_at</code> &amp; <code>created_at</code></h3>
+
+<p>columns?</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Active Record automatically tracks</p>
+
+<h2 id="creation--modification">creation &amp; modification</h2>
+
+<p>times of each record</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="other-examples">Other Examples</h1>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="viewing">Viewing</h1>
+
+<p><code>Post.last</code></p>
+
+<pre><code>SELECT  "posts".* FROM "posts"
+  ORDER BY "posts"."id" DESC LIMIT ?  [["LIMIT", 1]]
+=&gt; #&lt;Post id: 1,
+          title: "First!",
+          body: "Viral to the max.",
+          created_at: "2017-11-29 01:37:50",
+          updated_at: "2017-11-29 01:37:50"&gt;
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="counting">Counting</h1>
+
+<p><code>Post.count</code></p>
+
+<pre><code>SELECT COUNT(*) FROM "posts"
+=&gt; 1
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="destroying">Destroying</h1>
+
+<p><code>Post.destroy_all</code></p>
+
+<pre><code>SELECT "posts".* FROM "posts"
+DELETE FROM "posts" WHERE "posts"."id" = ?  [["id", 1]]
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="just-a-sample">Just a sample</h2>
+
+<p>This is not an exhaustive list</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="exit-rails-console">Exit Rails Console</h1>
+
+<p><code>exit</code></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Quick detour into</p>
+
+<h2 id="database-theory">Database Theory</h2>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="acidhttpsenwikipediaorgwikiacid"><a href="https://en.wikipedia.org/wiki/ACID">ACID</a></h1>
+
+<p>A single DB can provide</p>
+
+<ul>
+  <li>Atomicity</li>
+  <li>Consistency</li>
+  <li>Isolation</li>
+  <li>Durability</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="cap-theoremhttpsenwikipediaorgwikicaptheorem"><a href="https://en.wikipedia.org/wiki/CAP_theorem">CAP Theorem</a></h1>
+
+<p>In the event of a network failure,</p>
+
+<p>a distributed DB must choose between</p>
+
+<ul>
+  <li>consistency</li>
+  <li>availability</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="basehttpsenwikipediaorgwikieventualconsistency"><a href="https://en.wikipedia.org/wiki/Eventual_consistency">BASE</a></h1>
+
+<p>Some distributed DBs prioritize availability.</p>
+
+<p>Eventually, all the data will be consistent.</p>
+
+<ul>
+  <li>Basically Available</li>
+  <li>Soft state</li>
+  <li>Eventual consistency</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="nosql-dbs">NoSQL DBs</h1>
+
+<ul>
+  <li><a href="https://www.mongodb.com/">MongoDB</a> is a document-based store</li>
+  <li><a href="https://redis.io/">Redis</a> is a key-value store</li>
+  <li><a href="http://cassandra.apache.org/">Cassandra</a> is a column-based store</li>
+  <li><a href="https://neo4j.com/">Neo4j</a> is a graph-based store</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="indexes">Indexes</h1>
+
+<p>Can speed up lookups, but</p>
+
+<p>requires extra space on disk and</p>
+
+<p>slows down writes</p>
+
+<aside class="notes">
+
+Can make looking up a user by their email fast.
+Every change to a users email means updating the index.
+
+</aside>
+</section>
+<section>
+
+<h1 id="sanitization">Sanitization</h1>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="never-trust-user-input">Never trust user input</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/SQL_injection">SQL injection</a> can cause your DB to be hacked</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Some ORMs sanitize some data by default</p>
+
+<h2 id="you-are-responsible">You are responsible</h2>
+
+<p>for ensuring data is</p>
+
+<p>sanitized before entering your system.</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="permissions">Permissions</h1>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Some users might only need read-only access.</p>
+
+<p>Review DB permissions to reduce risk of accidental</p>
+
+<h2 id="deletion-or-modification">deletion or modification</h2>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="normalizationhttpsenwikipediaorgwikidatabasenormalization"><a href="https://en.wikipedia.org/wiki/Database_normalization">Normalization</a></h1>
+
+<p>Removing duplication across tables</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="normal-forms">Normal Forms</h2>
+
+<ul>
+  <li><a href="https://en.wikipedia.org/wiki/First_normal_form">1NF</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Second_normal_form">2NF</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Third_normal_form">3NF</a>
+    <ul>
+      <li>“Nothing but the key”</li>
+    </ul>
+  </li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="constraints">Constraints</h1>
+
+<ul>
+  <li>primary key</li>
+  <li>foreign key</li>
+  <li>not null</li>
+  <li>unique</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="primary-key">Primary Key</h1>
+
+<p>The key another entity can use to reference this one</p>
+
+<p>No two records have the same primary key</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="foreign-keyhttpsenwikipediaorgwikiforeignkey"><a href="https://en.wikipedia.org/wiki/Foreign_key">Foreign Key</a></h1>
+
+<p>Uniquely identifies a row in another table or in this table</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h3 id="why-reference-a-row-in-the-same-table">Why reference a row in the same table?</h3>
+
+<p>To allow parent-child relationships.</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="migrations">Migrations</h1>
+
+<p>Changing the database schema as your needs change</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="migrations-cont">Migrations, cont.</h1>
+
+<ul>
+  <li>Migrating the database by hand is tricky.</li>
+  <li>Need to be consistent.</li>
+  <li>Need to do it across many machines (many developers)</li>
+  <li>Need to do it differently in different environments
+    <ul>
+      <li>PRD has multiple DBs whereas DEV has one local DB.</li>
+    </ul>
+  </li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="migrations-cont">Migrations, cont.</h1>
+
+<ul>
+  <li>Take databases offline
+    <ul>
+      <li>Can make changes that would break your application</li>
+    </ul>
+  </li>
+  <li>Keep databases online
+    <ul>
+      <li>Have to make sure old version of app works with new DB schema</li>
+      <li>Might have to make multiple deployments.</li>
+    </ul>
+  </li>
+</ul>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="migrations-cont">Migrations, cont.</h1>
+
+<p>For example, to rename a column:</p>
+
+<ul>
+  <li>Deploy code that duplicates a column with a new name</li>
+  <li>Deploy code that references the new column</li>
+  <li>Deploy code that deletes the old column</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="data-integrityhttpsenwikipediaorgwikidataintegritydatabases"><a href="https://en.wikipedia.org/wiki/Data_integrity#Databases">Data integrity</a></h1>
+
+<p>Application-level integrity vs Database-level integrity</p>
+
+<ul>
+  <li>Database can enforce referential integrity (city exists when creating a weather report)</li>
+  <li>Application can enforce higher-level things (Only an admin user can modify this record)</li>
+</ul>
+
+<h1 id="locks">Locks</h1>
+
+<p>Adding a non null column to a large table</p>
+
+<p>can lock the table</p>
+
+<p>and prevent reads or writes</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="locks-cont">Locks, cont.</h1>
+
+<p>To prevent a long table lock</p>
+
+<ul>
+  <li>Add a column that allows null values
+    <ul>
+      <li>Table is only locked for a short time</li>
+    </ul>
+  </li>
+  <li>Update each row to have a default value
+    <ul>
+      <li>This will lock each row for a short time</li>
+    </ul>
+  </li>
+  <li>Update the column to not allow null values
+    <ul>
+      <li>Since each column already has</li>
+    </ul>
+  </li>
+</ul>
+
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="scaling">Scaling</h2>
+
+<ul>
+  <li>Multiple nodes to handle more requests</li>
+  <li>Master node can do reads and writes</li>
+  <li>Slave nodes can do reads</li>
+  <li>Replication across nodes</li>
+  <li>Partition data across nodes</li>
+  <li>Increases complexity</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="fault-tolerance">Fault tolerance</h2>
+
+<p>If master node goes down,</p>
+
+<p>another one can still serve requests</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="recovery">Recovery</h1>
+
+<p>Make regular backups of databases</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="recovery-cont">Recovery, cont.</h1>
+
+<p>Have a restore process</p>
+
+<h3 id="try-out-the-restore-process">Try out the restore process</h3>
+
+<p>to make sure it works!</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
 <h1 id="todo-left-off-here">TODO: LEFT OFF HERE!</h1>
-
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<p>Web applications typically start using a SQL database</p>
-
-<p>May migrate to something more complex as they grow</p>
-
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-<p>-</p>
 
 
 <aside class="notes">
@@ -721,6 +1526,21 @@ Great for managing the database without typing everything yourself.
   <li><a href="https://en.wikipedia.org/wiki/View_(SQL)">Views</a></li>
 </ul>
 
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="links-cont">Links, cont.</h2>
+
+<ul>
+  <li><a href="https://en.wikipedia.org/wiki/Database_transaction">Transactions</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Commit_(data_management)">Commit</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Rollback_(data_management)#SQL">Rollback</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Distributed_data_store">Distributed data store</a></li>
+  <li><a href="http://searchsqlserver.techtarget.com/definition/normalization">Normalization overview</a></li>
+</ul>
 
 <aside class="notes">
 
@@ -729,102 +1549,10 @@ Great for managing the database without typing everything yourself.
 <section>
 
 <ul>
-  <li>Databases
+  <li>Views
     <ul>
-      <li>Relational
-        <ul>
-          <li>Schemas
-            <ul>
-              <li>Indexes</li>
-              <li>Relationships</li>
-              <li>Views
-                <ul>
-                  <li>A query is stored and then the results are calculated at run-time.</li>
-                  <li>Can represent a subset of a much larger table</li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>Queries</li>
-        </ul>
-      </li>
-      <li>Database management system
-        <ul>
-          <li>https://en.wikipedia.org/wiki/Database</li>
-          <li>
-            <blockquote>
-              <p>A general-purpose DBMS allows the definition, creation, querying, update, and administration of databases.</p>
-            </blockquote>
-          </li>
-        </ul>
-      </li>
-      <li>Relational DBMS
-        <ul>
-          <li>
-            <h2 id="httpsenwikipediaorgwikirelationaldatabasemanagementsystem">https://en.wikipedia.org/wiki/Relational_database_management_system</h2>
-          </li>
-        </ul>
-      </li>
-      <li>CAP Theorem
-        <ul>
-          <li>https://en.wikipedia.org/wiki/CAP_theorem</li>
-          <li>When you use network partitioning, you must choose between consistency and availability.</li>
-          <li>https://en.wikipedia.org/wiki/Distributed_data_store</li>
-          <li>Information is stored on more than one node, using replication</li>
-        </ul>
-      </li>
-      <li>ACID (Atomicity, Consistency, Isolation, Durability)
-        <ul>
-          <li>https://en.wikipedia.org/wiki/ACID</li>
-        </ul>
-      </li>
-      <li>BASE (Basically Available, Soft state, Eventual consistency)
-        <ul>
-          <li>https://en.wikipedia.org/wiki/Eventual_consistency</li>
-        </ul>
-      </li>
-      <li>CRUD
-        <ul>
-          <li>Create, Read, Update, Delete</li>
-        </ul>
-      </li>
-      <li>Transactions
-        <ul>
-          <li>https://en.wikipedia.org/wiki/Database_transaction</li>
-          <li>https://en.wikipedia.org/wiki/Commit_(data_management)</li>
-          <li>Example of a transaction</li>
-          <li><code>BEGIN WORK</code> - Marks the beginning of a transaction</li>
-          <li>Issue one or more SQL commands
-            <ul>
-              <li>Issue <code>UPDATE</code> command to modify a row</li>
-              <li>Issue <code>UPDATE</code> command to modify another row</li>
-            </ul>
-          </li>
-          <li><code>COMMIT</code> - Marks the success and the end of a transaction</li>
-        </ul>
-      </li>
-      <li>Rollbacks
-        <ul>
-          <li>If an error happens in the middle of one of those SQL commands, a <code>ROLLBACK</code> is issues, which reverts all those changes.</li>
-          <li>In a transaction, either all the commands pass and are applied or they all fail and nothing happens.</li>
-          <li>https://en.wikipedia.org/wiki/Rollback_(data_management)#SQL</li>
-          <li><code>BEGIN WORK</code> - Marks the beginning of a transaction</li>
-          <li>Issue one or more SQL commands
-            <ul>
-              <li>Issue <code>UPDATE</code> command to modify a row</li>
-              <li>Issue <code>UPDATE</code> command to modify another row - But this one fails</li>
-            </ul>
-          </li>
-          <li><code>ROLLBACK</code> - Marks the failure and the end of the transaction, reverts the changes</li>
-        </ul>
-      </li>
-      <li>Savepoints
-        <ul>
-          <li>Allow you to roll back a portion of a transaction.</li>
-          <li>Allow implementing complex error recovery in database application</li>
-        </ul>
-      </li>
-      <li>Constraints</li>
+      <li>A query is stored and then the results are calculated at run-time.</li>
+      <li>Can represent a subset of a much larger table</li>
       <li>Unique key - A column or set of columns which are guaranteed to be unique in the table
         <ul>
           <li>https://en.wikipedia.org/wiki/Unique_key</li>
@@ -833,82 +1561,20 @@ Great for managing the database without typing everything yourself.
           <li>No two rows (entities) will have the same <code>id</code></li>
         </ul>
       </li>
-      <li>Foreign key
-        <ul>
-          <li>https://en.wikipedia.org/wiki/Foreign_key</li>
-          <li>Uniquely identifies a row in another table or in this table</li>
-          <li>Why might you want to reference another row in the same table?</li>
-          <li>To allow parent-child relationships.</li>
-        </ul>
-      </li>
-      <li>Types of databases
-        <ul>
-          <li>NoSQL (Mongo)
-            <ul>
-              <li>https://en.wikipedia.org/wiki/NoSQL</li>
-            </ul>
-          </li>
-          <li>SQL (MySQL)
-            <ul>
-              <li>https://en.wikipedia.org/wiki/SQL</li>
-            </ul>
-          </li>
-          <li>Key-Value (Redis)</li>
-          <li>Centralized?
-            <ul>
-              <li>https://en.wikipedia.org/wiki/Centralized_database</li>
-              <li>Good data integrity</li>
-              <li>Bottlenecks with high traffic</li>
-            </ul>
-          </li>
-          <li>Distributed (Mongo)</li>
-          <li>https://en.wikipedia.org/wiki/Centralized_database#Centralised_databases_vs._Distributed_databases</li>
-          <li>Peer to Peer (BitTorrent)</li>
-          <li>Sqlite</li>
-          <li>Flat-file
-            <ul>
-              <li>https://en.wikipedia.org/wiki/Flat_file_database</li>
-              <li>CSV is an example</li>
-              <li>Plain text</li>
-              <li>Binary</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>Brands of SQL DBs
-        <ul>
-          <li>Oracle, MySQL, Postgres</li>
-        </ul>
-      </li>
+      <li>Foreign key</li>
     </ul>
   </li>
   <li>Basic Database Design</li>
   <li>How to work with Databases</li>
-  <li>It’s helpful to do things by hand first.</li>
-  <li>Then you understand the benefits that software tools give you.</li>
   <li>Software to interact with databases
     <ul>
       <li>Rails
         <ul>
-          <li>Rails can create DBs for you when creating a new project.</li>
-          <li>Can customize things</li>
           <li>DB adapters</li>
         </ul>
       </li>
       <li>ORM
         <ul>
-          <li>Object Relational Mapping.</li>
-          <li>Rails follows the Active record pattern</li>
-          <li>
-            <blockquote>
-              <p>An object that wraps a row in a database table or view, encapsulates the database access, and adds domain logic on that data.</p>
-            </blockquote>
-          </li>
-          <li>Martin Fowler</li>
-          <li>In fact, the library that handles this stuff is called <code>ActiveRecord</code></li>
-          <li>http://guides.rubyonrails.org/active_record_basics.html</li>
-          <li>Abstract the SQL behind a domain-specific language (DSL)</li>
-          <li>Make working with the database easier</li>
           <li>Dynamically reads the tables and their columns and creates SQL queries on the fly</li>
           <li>The ORM inflates the data from the DB into an object and its attributes</li>
           <li>This can take a decent bit of time for a complex object with a lot of attributes</li>
@@ -918,120 +1584,50 @@ Great for managing the database without typing everything yourself.
           <li>Helps you avoid N+1 query explosions</li>
           <li>The performance might not be what you need for processing data in bulk</li>
           <li>Dynamically generating the query is slower than having one hardcoded, but it’s a tradeoff. Hardcoding a query can make your application more fragile to changes in the future, whereas the dynamic queries will update themselves as things change and the ORM picks up those changes. A hardcoded query might refer to a column that was renamed, for instance.</li>
-          <li>This is qhere something like Sequel is nice, because it gives you the raw data</li>
+          <li>This is where something like Sequel is nice, because it gives you the raw data</li>
         </ul>
       </li>
       <li>It is worth doing things the “hard way” first.
         <ul>
-          <li>Without the ORM</li>
-          <li>Without Hadoop</li>
-          <li>Without the ML library</li>
           <li>You can learn the basics</li>
           <li>Learn what the libraries solve for you</li>
           <li>Also learn the limitations of the libraries</li>
           <li>Know how to get around the limitations when you need to.</li>
         </ul>
       </li>
-      <li>Other gems like Sequel</li>
-      <li>Database migrations at the application level
-        <ul>
-          <li>Migrating the database is tricky.</li>
-          <li>Need to be consistent.</li>
-          <li>Need to do it across many machines (many developers)</li>
-          <li>Need to do it differently in different environments
-            <ul>
-              <li>PRD has multiple DBs whereas DEV has one local DB.</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Your Data
-    <ul>
-      <li>Indexes
-        <ul>
-          <li>Pros and Cons</li>
-          <li>Take up space</li>
-          <li>Increase write times</li>
-          <li>Make reads fast</li>
-        </ul>
-      </li>
-      <li>Duplication of data</li>
-      <li>Data integrity
-        <ul>
-          <li>https://en.wikipedia.org/wiki/Data_integrity#Databases</li>
-        </ul>
-      </li>
-      <li>Application-level integrity vs Database-level integrity</li>
-      <li>Permissions on tables</li>
-      <li>Normalizing
-        <ul>
-          <li>http://searchsqlserver.techtarget.com/definition/normalization</li>
-          <li>https://en.wikipedia.org/wiki/Database_normalization</li>
-          <li>https://en.wikipedia.org/wiki/Boyce%E2%80%93Codd_normal_form</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Security
-    <ul>
-      <li>Data sanitization</li>
-      <li>Some is by default, but other things the dev must keep in mind, especially when creating queries on their own.</li>
-      <li>SQL injection</li>
-      <li>How ORMs can help with this</li>
+      <li>Database migrations at the application level</li>
     </ul>
   </li>
   <li>Other
     <ul>
       <li>Stored Procedures</li>
-      <li>Putting created_at and updated_at columns on a table.
-        <ul>
-          <li>This can be automatically managed by Rails</li>
-          <li>Helps you know when things were updated last, which is really helpful when diagnosing bugs</li>
-        </ul>
-      </li>
       <li>Join tables</li>
-      <li>Database locks
-        <ul>
-          <li>Row level</li>
-          <li>Table level</li>
-        </ul>
-      </li>
-      <li>Adding colums
-        <ul>
-          <li>Adding a column to a large table can lock the entire table for a long time</li>
-          <li>This can cause timeouts in an application</li>
-          <li>Multi-step migrations can help</li>
-          <li>Add a column that is allowed to be null.</li>
-          <li>The table-lock is over quickly</li>
-          <li>Then go through and populate all the rows in the table.</li>
-          <li>Row locks help keep the table from being unresponsive and are released often</li>
-          <li>Then update the table to not allow null values.</li>
-        </ul>
-      </li>
       <li>Triggers
         <ul>
           <li>https://en.wikipedia.org/wiki/Database_trigger</li>
         </ul>
       </li>
       <li>Views</li>
-      <li>Data anlytics
+      <li>Data analytics
         <ul>
           <li>Generating reports from the data</li>
           <li>Running custom queries to answer questions from clients</li>
         </ul>
       </li>
+      <li>Data integrity</li>
     </ul>
   </li>
   <li>Scaling
     <ul>
-      <li>Nodes</li>
-      <li>Replication</li>
-      <li>Master/Slave</li>
+      <li>Centralized?
+        <ul>
+          <li>https://en.wikipedia.org/wiki/Centralized_database</li>
+          <li>Good data integrity</li>
+          <li>Bottlenecks with high traffic</li>
+        </ul>
+      </li>
+      <li>Distributed (Mongo)</li>
       <li>Partitions</li>
-      <li>Fault tolerance</li>
-      <li>Backups</li>
       <li>Self-hosted vs cloud</li>
     </ul>
   </li>
@@ -1044,49 +1640,9 @@ Great for managing the database without typing everything yourself.
 </section>
 <section>
 
-<h2 id="so-im-here">So I’m here</h2>
-
-<p>to talk about databases</p>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<h2 id="but-first">But first</h2>
-
-<p>we need some background</p>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<h2 id="lets-start-with">Let’s start with</h2>
-
-<p>what we know</p>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
 <h2 id="database-recap">Database Recap</h2>
 
 <ul>
-  <li>…</li>
-  <li>…</li>
-  <li>…</li>
   <li>…</li>
 </ul>
 
@@ -1099,7 +1655,6 @@ Great for managing the database without typing everything yourself.
 <h2 id="other-things-to-think-about">Other things to think about</h2>
 
 <ul>
-  <li>…</li>
   <li>…</li>
 </ul>
 
@@ -1114,7 +1669,9 @@ Great for managing the database without typing everything yourself.
 <ul>
   <li>Where can you learn more?
     <ul>
+      <li><a href="https://www.pythoncentral.io/sqlalchemy-vs-orms/">Python ORMs</a></li>
       <li><a href="https://www.khanacademy.org/computing/computer-programming/sql/sql-basics/v/welcome-to-sql">Khan Academy SQL Basics</a></li>
+      <li><a href="https://thomaslarock.com/2015/06/101-things-i-wish-you-knew-about-sql-server/">101 things I wish I knew…</a></li>
     </ul>
   </li>
 </ul>
