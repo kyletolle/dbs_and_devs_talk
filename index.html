@@ -200,36 +200,6 @@ We gather information from the world around us and do a lot with it.
 </section>
 <section>
 
-<p>Over time, we</p>
-
-<h2 id="streamline">streamline</h2>
-
-<p>&amp;</p>
-
-<h2 id="refine">refine</h2>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<p>We have developed</p>
-
-<h2 id="hardware">hardware</h2>
-
-<p>&amp;</p>
-
-<h2 id="software">software</h2>
-
-<aside class="notes">
-
-to help us think more quickly.
-
-</aside>
-</section>
-<section>
-
 <h2 id="software-crunches">Software crunches</h2>
 
 <h1 id="data">data</h1>
@@ -264,34 +234,17 @@ That somewhere is usually databases.
 </section>
 <section>
 
-<h2 id="what-kinds">What kinds</h2>
+<h3 id="datas-earliest-home">Data’s earliest home</h3>
 
-<p>of data stores</p>
-
-<p>are there?</p>
+<h1 id="the-flat-file">The Flat File</h1>
 
 <aside class="notes">
-
-We will talk about a few types, but let's start with one.
-One of the simplest.
 
 </aside>
 </section>
 <section>
 
-<h1 id="flat-files">Flat Files*</h1>
-
-<p>The humble beginnings</p>
-
-<aside class="notes">
-
-On computers, at least.
-
-</aside>
-</section>
-<section>
-
-<p><code>$ cat students.csv</code></p>
+<p><code>cat students.csv</code></p>
 
 <pre><code>Id, Name, Grade
 1,  Ted,  B
@@ -308,22 +261,9 @@ On computers, at least.
 
 <h2 id="easy-peasy">Easy peasy</h2>
 
-<p>File lives on my computer</p>
+<p>Some things don’t need to be complicated</p>
 
 <aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<p>This is a</p>
-
-<h3 id="valid-strategy">valid strategy</h3>
-
-<aside class="notes">
-
-I access it when I need it.
-Some things don't need to be complicated.
 
 </aside>
 </section>
@@ -373,23 +313,13 @@ They allow us to store simple information when anything more complex would be ov
 </section>
 <section>
 
-<p>Want to</p>
+<h3 id="want-to">Want to</h3>
 
-<h2 id="know-more">know more</h2>
-
-<h3 id="about-the-data">about the data</h3>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<p>Want to</p>
-
-<h2 id="ask-questions">ask questions</h2>
-
-<h3 id="of-it">of it</h3>
+<ul>
+  <li>know more</li>
+  <li>ask questions</li>
+  <li>give access</li>
+</ul>
 
 <aside class="notes">
 
@@ -397,19 +327,7 @@ They allow us to store simple information when anything more complex would be ov
 </section>
 <section>
 
-<p>Want to</p>
-
-<h2 id="give-access">give access</h2>
-
-<h3 id="to-it">to it</h3>
-
-<aside class="notes">
-
-Want to give access to multiple people or programs.
-
-</aside>
-</section>
-<section>
+<h2 id="use-the-data-for">Use the data for</h2>
 
 <ul>
   <li>Web application</li>
@@ -423,7 +341,9 @@ Want to give access to multiple people or programs.
 </section>
 <section>
 
-<p>Some smart folks</p>
+<p>Fortunately for us,</p>
+
+<p>some smart folks</p>
 
 <h2 id="invented-the">invented the</h2>
 
@@ -435,31 +355,23 @@ Want to give access to multiple people or programs.
 </section>
 <section>
 
-<h2 id="data-organization-on">Data organization on</h2>
+<p>Popular DBs according to Devs</p>
 
-<h1 id="steroids">steroids</h1>
+<p><img src="./popular_dbs.png" alt="Popular DBs chart" /></p>
 
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<p>In 1970, E.F. Codd described the</p>
-
-<h2 id="relational-modelhttpsenwikipediaorgwikirelationalmodel"><a href="https://en.wikipedia.org/wiki/Relational_model">Relational Model</a></h2>
+<p><small><a href="https://insights.stackoverflow.com/survey/2017#technology-databases">https://insights.stackoverflow.com/survey/2017#technology-databases</a></small></p>
 
 <aside class="notes">
 
 </aside>
 </section>
 <section>
+
+<p>Many common DBs use the</p>
 
 <h2 id="relational-model">Relational Model</h2>
 
 <p><img src="./relational_model_concepts.png" alt="Relational Model Concepts" />*</p>
-
-<p><br /></p>
 
 <p><small>*: By <a href="//commons.wikimedia.org/wiki/User:AutumnSnow" title="User:AutumnSnow">User:AutumnSnow</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=1313684">Link</a><small></small></small></p>
 
@@ -469,23 +381,13 @@ Want to give access to multiple people or programs.
 </section>
 <section>
 
-<p>This is the foundation for the</p>
+<p>In other words, we have a</p>
 
-<h1 id="relational-database">Relational Database</h1>
+<h1 id="table">Table</h1>
 
-<aside class="notes">
+<p>with</p>
 
-</aside>
-</section>
-<section>
-
-<p>We interact with a</p>
-
-<h3 id="relational-database">Relational Database</h3>
-
-<p>using</p>
-
-<h1 id="sql">SQL</h1>
+<h2 id="rows--columns">Rows &amp; Columns</h2>
 
 <aside class="notes">
 
@@ -495,7 +397,9 @@ Want to give access to multiple people or programs.
 
 <h1 id="sql-is-a-abbr-titledomain-specific-languagedslabbr">SQL is a <abbr title="domain-specific language">DSL</abbr></h1>
 
-<p>for managing data</p>
+<p>for managing data in a</p>
+
+<h2 id="relational-db">Relational DB</h2>
 
 <aside class="notes">
 
@@ -503,19 +407,7 @@ Want to give access to multiple people or programs.
 </section>
 <section>
 
-<h1 id="sql-is-an-abbr-titleapplication-programming-interfaceapiabbr">SQL is an <abbr title="application programming interface">API</abbr></h1>
-
-<p>for managing data</p>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<p>Remember that student data</p>
-
-<p>we had earlier?</p>
+<p>Remember our student data?</p>
 
 <aside class="notes">
 
@@ -536,7 +428,7 @@ Want to give access to multiple people or programs.
 </section>
 <section>
 
-<h2 id="put-a-database-on-it">Put a database on it</h2>
+<h2 id="put-a-database-on-it">Put a database on it!</h2>
 
 <p><img src="./put_a_bird_on_it.jpg" alt="Put a bird on it" /></p>
 
@@ -548,39 +440,37 @@ Portlandia!
 </section>
 <section>
 
-<p>We have a</p>
+<p><code>students</code></p>
 
-<h1 id="table">Table</h1>
-
-<p>with</p>
-
-<h2 id="rows--columns">Rows &amp; Columns</h2>
-
-<aside class="notes">
-
-Let's simplify the Relational Model terms
-
-</aside>
-</section>
-<section>
-
-<p>This leads us to our</p>
-
-<h1 id="database-schema">Database Schema</h1>
-
-<aside class="notes">
-
-This is a formal definition of our data.
-
-</aside>
-</section>
-<section>
-
-<h1 id="table">Table</h1>
-
-<p>The name of the collection of our data</p>
-
-<p><code>Students</code></p>
+<table>
+  <tbody>
+    <tr>
+      <td>Id</td>
+      <td>Name</td>
+      <td>Grade</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Ted</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Stan</td>
+      <td>A-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Fred</td>
+      <td>C++</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Ned</td>
+      <td>5%</td>
+    </tr>
+  </tbody>
+</table>
 
 <aside class="notes">
 
@@ -588,11 +478,76 @@ This is a formal definition of our data.
 </section>
 <section>
 
-<h1 id="row">Row</h1>
+<p>The <code>table</code> has a <code>schema</code>.</p>
 
-<p>Each individual student’s data</p>
+<p>Each <code>row</code> is a <code>record</code>.</p>
 
-<pre><code>1, Ted, B
+<p>Each <code>column</code> is an <code>attribute</code>.</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Let’s drop into</p>
+
+<h1 id="postgres">Postgres</h1>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="install-postgres">Install Postgres</h2>
+
+<p><code>brew install postgres</code></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="start-postgres">Start Postgres</h2>
+
+<p><code>brew services start postgresql</code></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="create-a-db">Create a DB</h2>
+
+<p><code>createdb dbs_and_devs_talk</code></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="connect-to-the-db">Connect to the DB</h2>
+
+<p><code>psql dbs_and_devs_talk</code></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="create-a-table">Create a Table</h1>
+
+<pre><code>CREATE TABLE students(
+  id SERIAL,
+  name TEXT NOT NULL,
+  grade TEXT NOT NULL,
+  PRIMARY KEY(id)
+);
 </code></pre>
 
 <aside class="notes">
@@ -601,16 +556,123 @@ This is a formal definition of our data.
 </section>
 <section>
 
-<h1 id="column">Column</h1>
+<h1 id="insert-data">Insert Data</h1>
 
-<p>An attribute of the student</p>
-
-<pre><code>Grade
-B
-A-
-C++
-5%
+<pre><code>INSERT INTO students (name, grade) values ('Ted', 'B');
+INSERT INTO students (name, grade) values ('Stan', 'A-');
+INSERT INTO students (name, grade) values ('Fred', 'C++');
+INSERT INTO students (name, grade) values ('Ned', '5%');
 </code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="view-data">View Data</h1>
+
+<p><code>SELECT * FROM students;</code></p>
+
+<p><img src="./select_from_students.png" alt="Query result" /></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Do stuff</p>
+
+<h2 id="the-hard-way">the hard way</h2>
+
+<p>for a while</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p><img src="no_tools.jpg" alt="I dare you not to use your tools" /></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h3 id="allows-you-to-understand">Allows you to understand</h3>
+
+<ul>
+  <li>the benefits of your tools</li>
+  <li>the limits of your tools</li>
+  <li>how to work around those limits</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Plus, learn to</p>
+
+<h2 id="channel-your-anger">channel your anger</h2>
+
+<p><img src="./angry_anakin.jpg" alt="Angry Anakin" /></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="useful-tools">Useful Tools</h1>
+
+<ul>
+  <li><a href="https://www.pgadmin.org/download/pgadmin-4-macos/">pgAdmin 4</a></li>
+  <li><a href="https://eggerapps.at/postico/">Postico</a></li>
+  <li>ORMs</li>
+</ul>
+
+<aside class="notes">
+
+Great for managing the database without typing everything yourself.
+
+</aside>
+</section>
+<section>
+
+<h1 id="orm">ORM</h1>
+
+<p>Object-Relational Mapping</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Maps</p>
+
+<h2 id="database-records">database records</h2>
+
+<p>to</p>
+
+<h2 id="object-instances">object instances</h2>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="ruby-on-rails">Ruby on Rails</h1>
+
+<p>follows the</p>
+
+<h2 id="active-record-patternhttpswwwmartinfowlercomeaacatalogactiverecordhtml"><a href="https://www.martinfowler.com/eaaCatalog/activeRecord.html">Active Record pattern</a></h2>
 
 <aside class="notes">
 
@@ -639,32 +701,6 @@ C++
 <section>
 <p>-</p>
 
-<ul>
-  <li>You’ll use SQL during your career.</li>
-  <li>It’s used for setting up applications, analytics, etc</li>
-  <li>Applications will likely start out with SQL and then portions will migrate to more complex setups as they grow and require it.</li>
-</ul>
-
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<p>First, a little background</p>
-
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<p>Simple databases</p>
-
-<p>Flat files</p>
-
 
 <aside class="notes">
 
@@ -679,6 +715,10 @@ C++
   <li><a href="https://en.wikipedia.org/wiki/Relational_model">Relational model</a></li>
   <li><a href="https://en.wikipedia.org/wiki/Relational_database">Relational database</a></li>
   <li><a href="https://en.wikipedia.org/wiki/SQL">SQL</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Table_(database)">Tables</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Field_(computer_science)">Fields</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Active_record_pattern">Active Record pattern</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/View_(SQL)">Views</a></li>
 </ul>
 
 
@@ -695,23 +735,10 @@ C++
         <ul>
           <li>Schemas
             <ul>
-              <li>Tables
-                <ul>
-                  <li>https://en.wikipedia.org/wiki/Table_(database)</li>
-                  <li>Columns</li>
-                  <li>Rows (also called records)</li>
-                </ul>
-              </li>
-              <li>Fields
-                <ul>
-                  <li>https://en.wikipedia.org/wiki/Field_(computer_science)</li>
-                </ul>
-              </li>
               <li>Indexes</li>
               <li>Relationships</li>
               <li>Views
                 <ul>
-                  <li>https://en.wikipedia.org/wiki/View_(SQL)</li>
                   <li>A query is stored and then the results are calculated at run-time.</li>
                   <li>Can represent a subset of a much larger table</li>
                 </ul>
@@ -872,8 +899,6 @@ C++
         <ul>
           <li>Object Relational Mapping.</li>
           <li>Rails follows the Active record pattern</li>
-          <li>https://en.wikipedia.org/wiki/Active_record_pattern</li>
-          <li>https://www.martinfowler.com/eaaCatalog/activeRecord.html</li>
           <li>
             <blockquote>
               <p>An object that wraps a row in a database table or view, encapsulates the database access, and adds domain logic on that data.</p>
@@ -1089,8 +1114,7 @@ C++
 <ul>
   <li>Where can you learn more?
     <ul>
-      <li>Khan Academy?</li>
-      <li>https://www.khanacademy.org/computing/computer-programming/sql/sql-basics/v/welcome-to-sql</li>
+      <li><a href="https://www.khanacademy.org/computing/computer-programming/sql/sql-basics/v/welcome-to-sql">Khan Academy SQL Basics</a></li>
     </ul>
   </li>
 </ul>
