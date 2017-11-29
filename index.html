@@ -143,9 +143,10 @@ These jobs are diverse but they all had something in common: using databases.
 <h1 id="overview">Overview</h1>
 
 <ul>
-  <li>…</li>
-  <li>…</li>
-  <li>Fill this out more after the talk has taken shape</li>
+  <li>Background</li>
+  <li>ORMs</li>
+  <li>DB Theory</li>
+  <li>Important Concepts</li>
 </ul>
 
 <aside class="notes">
@@ -161,6 +162,7 @@ These jobs are diverse but they all had something in common: using databases.
 <aside class="notes">
 
 Sometimes we hop into the middle of things, and it's good to think back on the beginning and understand the context in which things came about.
+You're going to be familiar with this first part, so I will breeze through it.
 
 </aside>
 </section>
@@ -596,6 +598,8 @@ INSERT INTO backpacks (color, student_id) values('clear', 1);
 
 <h2 id="view-data">View Data</h2>
 
+<p><code>SELECT * FROM backpacks;</code></p>
+
 <pre class="text"><code> id | color | student_id
 ====+=======+============
   1 | blue  |          1
@@ -866,7 +870,7 @@ end
 </section>
 <section>
 
-<h2 id="active-record-is-a-dsl">Active Record is a DSL</h2>
+<h2 id="activerecord-is-a-dsl">ActiveRecord is a DSL</h2>
 
 <p>We can modify SQL data with it</p>
 
@@ -893,7 +897,7 @@ end
 
 <p>for various</p>
 
-<h2 id="active-record-methods">Active Record methods</h2>
+<h2 id="activerecord-methods">ActiveRecord methods</h2>
 
 <aside class="notes">
 
@@ -1031,7 +1035,7 @@ Either both get updated or neither do.
 
 <h2 id="dynamically-generated">Dynamically generated</h2>
 
-<p>Active Record analyzes the table and</p>
+<p>ActiveRecord analyzes the table and</p>
 
 <p>generates the correct query</p>
 
@@ -1052,7 +1056,7 @@ Either both get updated or neither do.
 </section>
 <section>
 
-<p>Active Record measures</p>
+<p>ActiveRecord measures</p>
 
 <h2 id="how-long">how long</h2>
 
@@ -1130,7 +1134,7 @@ Either both get updated or neither do.
 </section>
 <section>
 
-<p>Active Record automatically tracks</p>
+<p>ActiveRecord automatically tracks</p>
 
 <h2 id="creation--modification">creation &amp; modification</h2>
 
@@ -1152,7 +1156,7 @@ Either both get updated or neither do.
 
 <h1 id="viewing">Viewing</h1>
 
-<p><code>Post.last</code></p>
+<p><code>post = Post.last</code></p>
 
 <pre class="text"><code>SELECT  "posts".* FROM "posts"
   ORDER BY "posts"."id" DESC LIMIT ?  [["LIMIT", 1]]
@@ -1162,6 +1166,24 @@ Either both get updated or neither do.
           created_at: "2017-11-29 01:37:50",
           updated_at: "2017-11-29 01:37:50"&gt;
 </code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="using">Using</h1>
+<p><code>post.title</code></p>
+
+<pre class="text"><code>=&gt; "First!"
+</code></pre>
+
+<p><code>post.updated_at</code></p>
+
+<pre class="text"><code>=&gt; Wed, 29 Nov 2017 02:31:07 UTC +00:00
+</code></pre>
+
 
 <aside class="notes">
 
@@ -1239,6 +1261,8 @@ end
 
 <h2 id="rolling-back-schema">rolling back schema</h2>
 
+<p><code>rails db:rollback</code></p>
+
 <aside class="notes">
 
 </aside>
@@ -1247,14 +1271,13 @@ end
 
 <h2 id="create-a-relationship">Create a Relationship</h2>
 
-<pre class="sh"><code>rails g model like post:references author:references
+<pre class="sh"><code>rails g model like post:references
 </code></pre>
 
 <pre class="ruby"><code>class CreateLikes &lt; ActiveRecord::Migration[5.1]
   def change
     create_table :likes do |t|
       t.references :post, foreign_key: true
-      t.references :author, foreign_key: true
 
       t.timestamps
     end
@@ -1263,7 +1286,7 @@ end
 </code></pre>
 
 <ul>
-  <li>Adds indexes for <code>author_id</code>, <code>post_id</code></li>
+  <li>Adds indexes for <code>post_id</code></li>
 </ul>
 
 <aside class="notes">
@@ -1435,6 +1458,7 @@ end
 <aside class="notes">
 
 The same DSL works for MySQL, Postgres, etc.
+You don't have to change your Rails code even if you switch your backing data store.
 
 </aside>
 </section>
@@ -1655,12 +1679,12 @@ Helps the DBMS enforce data integrity
 <h1 id="migrations-cont">Migrations, cont.</h1>
 
 <ul>
-  <li>Migrating the database by hand is tricky.</li>
-  <li>Need to be consistent.</li>
+  <li>Migrating the database by hand is tricky</li>
+  <li>Need to be consistent</li>
   <li>Need to do it across many machines (many developers)</li>
   <li>Need to do it differently in different environments
     <ul>
-      <li>PRD has multiple DBs whereas DEV has one local DB.</li>
+      <li>PRD has multiple DBs whereas DEV has one local DB</li>
     </ul>
   </li>
 </ul>
@@ -1682,7 +1706,7 @@ Helps the DBMS enforce data integrity
   <li>Keep databases online
     <ul>
       <li>Have to make sure old version of app works with new DB schema</li>
-      <li>Might have to make multiple deployments.</li>
+      <li>Might have to make multiple deployments</li>
     </ul>
   </li>
 </ul>
@@ -1695,12 +1719,31 @@ Helps the DBMS enforce data integrity
 
 <h1 id="migrations-cont">Migrations, cont.</h1>
 
-<p>For example, to rename a column:</p>
+<p>To keep the db online and rename a column:</p>
 
 <ul>
-  <li>Deploy code that duplicates a column with a new name</li>
-  <li>Deploy code that references the new column</li>
-  <li>Deploy code that deletes the old column</li>
+  <li>First deploy
+    <ul>
+      <li>Duplicate column <code>old_name</code> to one called <code>new_name</code></li>
+      <li>Add code that updates <code>new_name</code> as well as <code>old_name</code></li>
+    </ul>
+  </li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="migrations-cont">Migrations, cont.</h1>
+<ul>
+  <li>Second deploy
+    <ul>
+      <li>Change all code references from <code>old_name</code> to <code>new_name</code></li>
+      <li>Remove now-unused column <code>old_name</code></li>
+    </ul>
+  </li>
 </ul>
 
 <aside class="notes">
@@ -1714,8 +1757,16 @@ Helps the DBMS enforce data integrity
 <p>Application-level integrity vs Database-level integrity</p>
 
 <ul>
-  <li>Database can enforce referential integrity (city exists when creating a weather report)</li>
-  <li>Application can enforce higher-level things (Only an admin user can modify this record)</li>
+  <li>Database can enforce referential integrity
+    <ul>
+      <li>Post exists when creating a like</li>
+    </ul>
+  </li>
+  <li>Application can enforce higher-level things
+    <ul>
+      <li>Only a person with specific permissions can modify this post</li>
+    </ul>
+  </li>
 </ul>
 
 <aside class="notes">
@@ -1726,7 +1777,7 @@ Helps the DBMS enforce data integrity
 
 <h1 id="locks">Locks</h1>
 
-<p>Adding a non null column to a large table</p>
+<p>Adding a non-null column to a large table</p>
 
 <p>can lock the table</p>
 
@@ -1740,7 +1791,7 @@ Helps the DBMS enforce data integrity
 
 <h1 id="locks-cont">Locks, cont.</h1>
 
-<p>To prevent a long table lock</p>
+<p>To prevent a long table lock:</p>
 
 <ul>
   <li>Add a column that allows null values
@@ -1755,7 +1806,7 @@ Helps the DBMS enforce data integrity
   </li>
   <li>Update the column to not allow null values
     <ul>
-      <li>Since each column already has</li>
+      <li>Since each column already has a value, the lock is released quickly</li>
     </ul>
   </li>
 </ul>
@@ -1775,7 +1826,7 @@ Helps the DBMS enforce data integrity
       <li>More Memory</li>
       <li>More Disk Space</li>
       <li><a href="https://en.wikipedia.org/wiki/Database_caching">Caching</a></li>
-      <li><a href="https://en.wikipedia.org/wiki/Partition_(database)">Partitioning</a> large tables  data across nodes</li>
+      <li><a href="https://en.wikipedia.org/wiki/Partition_(database)">Partitioning</a> data across tables</li>
     </ul>
   </li>
 </ul>
@@ -1794,7 +1845,7 @@ Helps the DBMS enforce data integrity
       <li>Load balancing</li>
       <li>Create a pool of nodes</li>
       <li>Add more nodes to the pool</li>
-      <li><a href="https://en.wikipedia.org/wiki/Shard_(database_architecture)">Sharding</a></li>
+      <li><a href="https://en.wikipedia.org/wiki/Shard_(database_architecture)">Sharding</a> data across nodes</li>
     </ul>
   </li>
 </ul>
@@ -1895,7 +1946,7 @@ Helps the DBMS enforce data integrity
   <li>Stored Procedures</li>
   <li>Reports/Analytics</li>
   <li>Spatial extensions</li>
-  <li>Self-hosted vs Cloud</li>
+  <li>Self-hosted vs Cloud-hosted</li>
 </ul>
 
 <aside class="notes">
@@ -1937,6 +1988,16 @@ Helps the DBMS enforce data integrity
   <li><a href="https://www.khanacademy.org/computing/computer-programming/sql/sql-basics/v/welcome-to-sql">Khan Academy SQL Basics</a></li>
   <li><a href="https://thomaslarock.com/2015/06/101-things-i-wish-you-knew-about-sql-server/">101 things I wish I knew…</a></li>
 </ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="drop-postgres-table">Drop postgres table</h1>
+
+<p><code>dropdb dbs_and_devs_talk</code></p>
 
 <aside class="notes">
 
