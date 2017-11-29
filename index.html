@@ -246,7 +246,7 @@ That somewhere is usually databases.
 
 <p><code>cat students.csv</code></p>
 
-<pre><code>Id, Name, Grade
+<pre class="text"><code>Id, Name, Grade
 1,  Ted,  B
 2,  Stan, A-
 3,  Fred, C++
@@ -415,7 +415,7 @@ They allow us to store simple information when anything more complex would be ov
 </section>
 <section>
 
-<pre><code>Id, Name, Grade
+<pre class="text"><code>Id, Name, Grade
 1,  Ted,  B
 2,  Stan, A-
 3,  Fred, C++
@@ -443,12 +443,14 @@ Portlandia!
 <p><code>students</code></p>
 
 <table>
-  <tbody>
+  <thead>
     <tr>
-      <td>Id</td>
-      <td>Name</td>
-      <td>Grade</td>
+      <th>id</th>
+      <th>name</th>
+      <th>grade</th>
     </tr>
+  </thead>
+  <tbody>
     <tr>
       <td>1</td>
       <td>Ted</td>
@@ -502,7 +504,7 @@ Portlandia!
 
 <h1 id="set-up-postgres">Set up Postgres</h1>
 
-<pre><code>brew install postgres
+<pre class="sh"><code>brew install postgres
 brew services start postgresql
 createdb dbs_and_devs_talk
 psql dbs_and_devs_talk
@@ -517,10 +519,9 @@ psql dbs_and_devs_talk
 <h1 id="create-a-table">Create a Table</h1>
 
 <pre><code>CREATE TABLE students(
-  id SERIAL,
+  id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
-  grade TEXT NOT NULL,
-  PRIMARY KEY(id)
+  grade TEXT NOT NULL
 );
 </code></pre>
 
@@ -548,7 +549,14 @@ INSERT INTO students (name, grade) values ('Ned', '5%');
 
 <p><code>SELECT * FROM students;</code></p>
 
-<p><img src="./select_from_students.png" alt="Query result" /></p>
+<pre class="text"><code> id | name | grade
+====+======+=======
+  1 | Ted  | B
+  2 | Stan | A-
+  3 | Fred | C++
+  4 | Ned  | 5%
+(4 rows)
+</code></pre>
 
 <aside class="notes">
 
@@ -558,6 +566,86 @@ INSERT INTO students (name, grade) values ('Ned', '5%');
 
 <h2 id="create-a-relationship">Create a Relationship</h2>
 
+<pre><code>CREATE TABLE backpacks(
+  id SERIAL PRIMARY KEY,
+  color TEXT NOT NULL,
+  student_id INT references students(id)
+);
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="insert-data">Insert Data</h1>
+
+<pre><code>INSERT INTO backpacks (color, student_id) values('blue', 1);
+INSERT INTO backpacks (color, student_id) values('red', 2);
+INSERT INTO backpacks (color, student_id) values('grey', 3);
+INSERT INTO backpacks (color, student_id) values('green', 4);
+INSERT INTO backpacks (color, student_id) values('clear', 1);
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="view-data">View Data</h2>
+
+<pre class="text"><code> id | color | student_id
+====+=======+============
+  1 | blue  |          1
+  2 | red   |          2
+  3 | grey  |          3
+  4 | green |          4
+  5 | clear |          1
+(5 rows)
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="backback-colors-for-a-student">Backback colors for a Student</h2>
+
+<pre><code>SELECT color FROM backpacks WHERE student_id = 1;
+</code></pre>
+
+<pre class="text"><code> color
+=======
+ blue
+ clear
+(2 rows)
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="backpacks-for-all-students">Backpacks for all students</h2>
+
+<pre><code>SELECT s.name, b.color FROM students as s
+  JOIN backpacks as b ON s.id = b.student_id
+  ORDER BY s.name;
+</code></pre>
+
+<pre class="text"><code> name | color
+======+=======
+ Fred | grey
+ Ned  | green
+ Stan | red
+ Ted  | blue
+ Ted  | clear
+(5 rows)
+</code></pre>
 
 <aside class="notes">
 
@@ -677,7 +765,7 @@ Inflates the DB data into an instantiated class
 
 <h1 id="install-ruby">Install Ruby</h1>
 
-<pre><code>brew install rbenv
+<pre class="sh"><code>brew install rbenv
 rbenv install 2.4.2
 rbenv global 2.4.2
 </code></pre>
@@ -728,7 +816,25 @@ cd blog
 
 <h1 id="create-posts">Create Posts</h1>
 
-<pre><code>rails generate scaffold Post title:string body:text
+<pre class="sh"><code>rails generate scaffold Post title:string body:text
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<pre><code>class CreatePosts &lt; ActiveRecord::Migration[5.1]
+  def change
+    create_table :posts do |t|
+      t.string :title
+      t.text :body
+
+      t.timestamps
+    end
+  end
+end
 </code></pre>
 
 <aside class="notes">
@@ -739,7 +845,7 @@ cd blog
 
 <h1 id="run-db-migration">Run db migration</h1>
 
-<pre><code>rails db:migrate
+<pre class="sh"><code>rails db:migrate
 </code></pre>
 
 
@@ -751,7 +857,8 @@ cd blog
 
 <h2 id="enter-ruby-console">Enter Ruby console</h2>
 
-<p><code>rails console</code></p>
+<pre class="sh"><code>rails console
+</code></pre>
 
 <aside class="notes">
 
@@ -771,7 +878,7 @@ cd blog
 
 <h1 id="create-a-new-post">Create a new post</h1>
 
-<pre><code>Post.create title: 'First!', body: 'Viral to the max.'
+<pre class="ruby"><code>Post.create title: 'First!', body: 'Viral to the max.'
 </code></pre>
 
 <aside class="notes">
@@ -796,7 +903,7 @@ cd blog
 
 <h2 id="output-for-create">Output for create</h2>
 
-<pre><code>(0.1ms)  begin transaction
+<pre class="text"><code>(0.1ms)  begin transaction
 SQL (0.4ms)  INSERT INTO "posts"
   ("title", "body", "created_at", "updated_at")
   VALUES (?, ?, ?, ?)
@@ -836,7 +943,7 @@ SQL (0.4ms)  INSERT INTO "posts"
 
 <h1 id="transactionshttpsenwikipediaorgwikidatabasetransaction"><a href="https://en.wikipedia.org/wiki/Database_transaction">Transactions</a></h1>
 
-<pre><code>(0.1ms)  begin transaction
+<pre class="text"><code>(0.1ms)  begin transaction
 ...
 (0.7ms)  commit transaction
 </code></pre>
@@ -905,7 +1012,7 @@ Either both get updated or neither do.
 
 <h1 id="queries">Queries</h1>
 
-<pre><code>SQL (0.4ms)  INSERT INTO "posts"
+<pre class="text"><code>SQL (0.4ms)  INSERT INTO "posts"
   ("title", "body", "created_at", "updated_at")
   VALUES (?, ?, ?, ?)
   [
@@ -924,7 +1031,7 @@ Either both get updated or neither do.
 
 <h2 id="dynamically-generated">Dynamically generated</h2>
 
-<p>Active Record analyses the table and</p>
+<p>Active Record analyzes the table and</p>
 
 <p>generates the correct query</p>
 
@@ -936,7 +1043,7 @@ Either both get updated or neither do.
 
 <h1 id="duration">Duration</h1>
 
-<pre><code>SQL (0.4ms)  INSERT INTO "posts" ...
+<pre class="text"><code>SQL (0.4ms)  INSERT INTO "posts" ...
 </code></pre>
 
 <aside class="notes">
@@ -1047,7 +1154,7 @@ Either both get updated or neither do.
 
 <p><code>Post.last</code></p>
 
-<pre><code>SELECT  "posts".* FROM "posts"
+<pre class="text"><code>SELECT  "posts".* FROM "posts"
   ORDER BY "posts"."id" DESC LIMIT ?  [["LIMIT", 1]]
 =&gt; #&lt;Post id: 1,
           title: "First!",
@@ -1066,7 +1173,7 @@ Either both get updated or neither do.
 
 <p><code>Post.count</code></p>
 
-<pre><code>SELECT COUNT(*) FROM "posts"
+<pre class="text"><code>SELECT COUNT(*) FROM "posts"
 =&gt; 1
 </code></pre>
 
@@ -1080,7 +1187,7 @@ Either both get updated or neither do.
 
 <p><code>Post.destroy_all</code></p>
 
-<pre><code>SELECT "posts".* FROM "posts"
+<pre class="text"><code>SELECT "posts".* FROM "posts"
 DELETE FROM "posts" WHERE "posts"."id" = ?  [["id", 1]]
 </code></pre>
 
@@ -1103,6 +1210,145 @@ DELETE FROM "posts" WHERE "posts"."id" = ?  [["id", 1]]
 <h1 id="exit-rails-console">Exit Rails Console</h1>
 
 <p><code>exit</code></p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="add-a-column-to-post">Add a Column to Post</h2>
+
+<pre class="sh"><code>rails g migration AddCurrentSongToPosts current_song:string
+</code></pre>
+
+<pre class="ruby"><code>class AddCurrentSongToPosts &lt; ActiveRecord::Migration[5.1]
+  def change
+    add_column :posts, :current_song, :string
+  end
+end
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<p>Migrations support</p>
+
+<h2 id="rolling-back-schema">rolling back schema</h2>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="create-a-relationship">Create a Relationship</h2>
+
+<pre class="sh"><code>rails g model like post:references author:references
+</code></pre>
+
+<pre class="ruby"><code>class CreateLikes &lt; ActiveRecord::Migration[5.1]
+  def change
+    create_table :likes do |t|
+      t.references :post, foreign_key: true
+      t.references :author, foreign_key: true
+
+      t.timestamps
+    end
+  end
+end
+</code></pre>
+
+<ul>
+  <li>Adds indexes for <code>author_id</code>, <code>post_id</code></li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="complex-relationship">Complex Relationship</h2>
+
+<p>An author can publish many posts, and</p>
+
+<p>a post can have many authors</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="complex-relationship-cont">Complex Relationship, cont.</h2>
+
+<pre class="sh"><code>rails g model author name:string email:string
+</code></pre>
+
+<pre class="ruby"><code>class CreateAuthors &lt; ActiveRecord::Migration[5.1]
+  def change
+    create_table :authors do |t|
+      t.string :name
+      t.string :email
+
+      t.timestamps
+    end
+  end
+end
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="complex-relationship-cont">Complex Relationship, cont.</h2>
+
+<pre class="sh"><code>rails g migration CreateJoinTableAuthorsPosts author post
+</code></pre>
+
+<pre class="ruby"><code>class CreateJoinTableAuthorsPosts &lt; ActiveRecord::Migration[5.1]
+  def change
+    create_join_table :authors, :posts do |t|
+      # t.index [:author_id, :post_id]
+      # t.index [:post_id, :author_id]
+    end
+  end
+end
+</code></pre>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="even-complexerer">Even Complexerer</h2>
+
+<p>Sometimes the join tables are more complex</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<ul>
+  <li>Give the concept a name, like <code>Publications</code></li>
+  <li>Treat it like a model itself</li>
+  <li>Consider needing additional data, like a
+    <ul>
+      <li><code>primary_author</code> boolean attribute</li>
+      <li><code>royalty_earned</code> money attribute</li>
+    </ul>
+  </li>
+  <li>Use Timestamps to know when changes happen</li>
+</ul>
 
 <aside class="notes">
 
@@ -1172,14 +1418,115 @@ DELETE FROM "posts" WHERE "posts"."id" = ?  [["id", 1]]
 </section>
 <section>
 
-<h1 id="nosql-dbs">NoSQL DBs</h1>
+<h1 id="other-topics">Other Topics</h1>
 
-<ul>
-  <li><a href="https://www.mongodb.com/">MongoDB</a> is a document-based store</li>
-  <li><a href="https://redis.io/">Redis</a> is a key-value store</li>
-  <li><a href="http://cassandra.apache.org/">Cassandra</a> is a column-based store</li>
-  <li><a href="https://neo4j.com/">Neo4j</a> is a graph-based store</li>
-</ul>
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h3 id="orms">ORMs</h3>
+
+<p>support multiple databases through</p>
+
+<h3 id="db-adapters">DB Adapters</h3>
+
+<aside class="notes">
+
+The same DSL works for MySQL, Postgres, etc.
+
+</aside>
+</section>
+<section>
+
+<h3 id="orms">ORMS</h3>
+
+<p>generate queries on the fly, so</p>
+
+<p>are slower than hard-coded queries</p>
+
+<aside class="notes">
+
+Dynamically generating the query is slower than having one hardcoded, but it's a tradeoff. Hardcoding a query can make your application more fragile to changes in the future, whereas the dynamic queries will update themselves as things change and the ORM picks up those changes. A hardcoded query might refer to a column that was renamed, for instance.
+
+</aside>
+</section>
+<section>
+
+<h3 id="orms">ORMs</h3>
+
+<p>inflate objects with</p>
+
+<p>data from the DB, which</p>
+
+<h3 id="isnt-ideal-for-bulk-work">isn’t ideal for bulk work</h3>
+
+<aside class="notes">
+
+Can be slow when you want to quickly loop over a single attribute of all records.
+Especially when the object is complex and has special serialization rules.
+
+</aside>
+</section>
+<section>
+
+<h2 id="alternate-sql-library">Alternate SQL Library</h2>
+
+<p>like <a href="https://github.com/jeremyevans/sequel">sequel</a> for Ruby</p>
+
+<h3 id="might-be-more-performant">might be more performant</h3>
+
+<aside class="notes">
+
+It does not inflate data the same way.
+Working closer to the metal.
+
+</aside>
+</section>
+<section>
+
+<h2 id="n1-query-explosions">N+1 Query Explosions</h2>
+
+<p>ORMS may lazily fetch data, resulting in</p>
+
+<p>1,000+1 queries for</p>
+
+<p>1,000 posts by 1 author</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="primary-keyhttpsenwikipediaorgwikirelationaldatabaseprimarykey"><a href="https://en.wikipedia.org/wiki/Relational_database#Primary_key">Primary Key</a></h1>
+
+<p>Key (like <code>id</code>) that <a href="https://en.wikipedia.org/wiki/Unique_key">uniquely</a> identifies this record</p>
+
+<p>No two records have the same primary key</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h1 id="foreign-keyhttpsenwikipediaorgwikiforeignkey"><a href="https://en.wikipedia.org/wiki/Foreign_key">Foreign Key</a></h1>
+
+<p>Key (like <code>post_id</code>) that uniquely identifies</p>
+
+<p>some other row in a different table or in this table</p>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h3 id="why-reference-a-row-in-the-same-table">Why reference a row in the same table?</h3>
+
+<p>To allow parent-child relationships</p>
 
 <aside class="notes">
 
@@ -1191,9 +1538,9 @@ DELETE FROM "posts" WHERE "posts"."id" = ?  [["id", 1]]
 
 <p>Can speed up lookups, but</p>
 
-<p>requires extra space on disk and</p>
+<p>require extra space on disk and</p>
 
-<p>slows down writes</p>
+<p>slow down writes</p>
 
 <aside class="notes">
 
@@ -1216,19 +1563,19 @@ Every change to a users email means updating the index.
 
 <p><a href="https://en.wikipedia.org/wiki/SQL_injection">SQL injection</a> can cause your DB to be hacked</p>
 
+<p>Some ORMs may sanitize some data by default</p>
+
 <aside class="notes">
 
 </aside>
 </section>
 <section>
 
-<p>Some ORMs sanitize some data by default</p>
+<h2 id="responsibility-falls-on-you">Responsibility falls on you</h2>
 
-<h2 id="you-are-responsible">You are responsible</h2>
+<h3 id="to-ensure-data-is-sanitized">to ensure data is sanitized</h3>
 
-<p>for ensuring data is</p>
-
-<p>sanitized before entering your system.</p>
+<p>before entering your system</p>
 
 <aside class="notes">
 
@@ -1238,17 +1585,11 @@ Every change to a users email means updating the index.
 
 <h1 id="permissions">Permissions</h1>
 
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<p>Some users might only need read-only access.</p>
+<p>Some users might only need read-only access</p>
 
 <p>Review DB permissions to reduce risk of accidental</p>
 
-<h2 id="deletion-or-modification">deletion or modification</h2>
+<h3 id="deletion-or-modification">deletion or modification</h3>
 
 <aside class="notes">
 
@@ -1284,7 +1625,7 @@ Every change to a users email means updating the index.
 </section>
 <section>
 
-<h1 id="constraints">Constraints</h1>
+<h1 id="constraintshttpsenwikipediaorgwikidataintegritydatabases"><a href="https://en.wikipedia.org/wiki/Data_integrity#Databases">Constraints</a></h1>
 
 <ul>
   <li>primary key</li>
@@ -1295,37 +1636,7 @@ Every change to a users email means updating the index.
 
 <aside class="notes">
 
-</aside>
-</section>
-<section>
-
-<h1 id="primary-key">Primary Key</h1>
-
-<p>The key another entity can use to reference this one</p>
-
-<p>No two records have the same primary key</p>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<h1 id="foreign-keyhttpsenwikipediaorgwikiforeignkey"><a href="https://en.wikipedia.org/wiki/Foreign_key">Foreign Key</a></h1>
-
-<p>Uniquely identifies a row in another table or in this table</p>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<h3 id="why-reference-a-row-in-the-same-table">Why reference a row in the same table?</h3>
-
-<p>To allow parent-child relationships.</p>
-
-<aside class="notes">
+Helps the DBMS enforce data integrity
 
 </aside>
 </section>
@@ -1376,7 +1687,6 @@ Every change to a users email means updating the index.
   </li>
 </ul>
 
-
 <aside class="notes">
 
 </aside>
@@ -1407,6 +1717,12 @@ Every change to a users email means updating the index.
   <li>Database can enforce referential integrity (city exists when creating a weather report)</li>
   <li>Application can enforce higher-level things (Only an admin user can modify this record)</li>
 </ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
 
 <h1 id="locks">Locks</h1>
 
@@ -1444,7 +1760,6 @@ Every change to a users email means updating the index.
   </li>
 </ul>
 
-
 <aside class="notes">
 
 </aside>
@@ -1454,12 +1769,23 @@ Every change to a users email means updating the index.
 <h2 id="scaling">Scaling</h2>
 
 <ul>
-  <li>Multiple nodes to handle more requests</li>
-  <li>Master node can do reads and writes</li>
-  <li>Slave nodes can do reads</li>
-  <li>Replication across nodes</li>
-  <li>Partition data across nodes</li>
-  <li>Increases complexity</li>
+  <li>Vertical
+    <ul>
+      <li>Faster CPUs</li>
+      <li>More Memory</li>
+      <li>More Disk Space</li>
+      <li><a href="https://en.wikipedia.org/wiki/Database_caching">Caching</a></li>
+      <li><a href="https://en.wikipedia.org/wiki/Partition_(database)">Partitioning</a> large tables  data across nodes</li>
+    </ul>
+  </li>
+  <li>Horizontal - More servers
+    <ul>
+      <li>Load balancing</li>
+      <li>Create a pool of nodes</li>
+      <li>Add more nodes to the pool</li>
+      <li><a href="https://en.wikipedia.org/wiki/Shard_(database_architecture)">Sharding</a></li>
+    </ul>
+  </li>
 </ul>
 
 <aside class="notes">
@@ -1470,9 +1796,9 @@ Every change to a users email means updating the index.
 
 <h2 id="fault-tolerance">Fault tolerance</h2>
 
-<p>If master node goes down,</p>
+<p>If one node goes down,</p>
 
-<p>another one can still serve requests</p>
+<p>another can still serve requests</p>
 
 <aside class="notes">
 
@@ -1504,8 +1830,45 @@ Every change to a users email means updating the index.
 </section>
 <section>
 
-<h1 id="todo-left-off-here">TODO: LEFT OFF HERE!</h1>
+<h1 id="nosql-dbs">NoSQL DBs</h1>
 
+<ul>
+  <li><a href="https://www.mongodb.com/">MongoDB</a> is a document-based store</li>
+  <li><a href="https://redis.io/">Redis</a> is a key-value store</li>
+  <li><a href="http://cassandra.apache.org/">Cassandra</a> is a column-based store</li>
+  <li><a href="https://neo4j.com/">Neo4j</a> is a graph-based store</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="other-topics-to-consider">Other topics to consider</h2>
+
+<ul>
+  <li>Data Types</li>
+  <li>Views</li>
+  <li>Triggers</li>
+  <li>Full text search</li>
+  <li>Security</li>
+</ul>
+
+<aside class="notes">
+
+</aside>
+</section>
+<section>
+
+<h2 id="other-topics-to-consider-cont">Other topics to consider, cont.</h2>
+
+<ul>
+  <li>Stored Procedures</li>
+  <li>Reports/Analytics</li>
+  <li>Spatial extensions</li>
+  <li>Self-hosted vs Cloud</li>
+</ul>
 
 <aside class="notes">
 
@@ -1524,6 +1887,8 @@ Every change to a users email means updating the index.
   <li><a href="https://en.wikipedia.org/wiki/Field_(computer_science)">Fields</a></li>
   <li><a href="https://en.wikipedia.org/wiki/Active_record_pattern">Active Record pattern</a></li>
   <li><a href="https://en.wikipedia.org/wiki/View_(SQL)">Views</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Database_transaction">Transactions</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Commit_(data_management)">Commits</a></li>
 </ul>
 
 <aside class="notes">
@@ -1535,159 +1900,15 @@ Every change to a users email means updating the index.
 <h2 id="links-cont">Links, cont.</h2>
 
 <ul>
-  <li><a href="https://en.wikipedia.org/wiki/Database_transaction">Transactions</a></li>
-  <li><a href="https://en.wikipedia.org/wiki/Commit_(data_management)">Commit</a></li>
   <li><a href="https://en.wikipedia.org/wiki/Rollback_(data_management)#SQL">Rollback</a></li>
   <li><a href="https://en.wikipedia.org/wiki/Distributed_data_store">Distributed data store</a></li>
   <li><a href="http://searchsqlserver.techtarget.com/definition/normalization">Normalization overview</a></li>
+  <li><a href="http://guides.rubyonrails.org/active_record_basics.html">Rails ActiveRecord Basics</a></li>
+  <li><a href="http://use-the-index-luke.com/">Use the Index, Luke</a></li>
+  <li><a href="https://www.pythoncentral.io/sqlalchemy-vs-orms/">Python ORMs</a></li>
+  <li><a href="https://www.khanacademy.org/computing/computer-programming/sql/sql-basics/v/welcome-to-sql">Khan Academy SQL Basics</a></li>
+  <li><a href="https://thomaslarock.com/2015/06/101-things-i-wish-you-knew-about-sql-server/">101 things I wish I knew…</a></li>
 </ul>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<ul>
-  <li>Views
-    <ul>
-      <li>A query is stored and then the results are calculated at run-time.</li>
-      <li>Can represent a subset of a much larger table</li>
-      <li>Unique key - A column or set of columns which are guaranteed to be unique in the table
-        <ul>
-          <li>https://en.wikipedia.org/wiki/Unique_key</li>
-          <li>Primary key is the key other entity (row in another table) can use to reference this entity.</li>
-          <li>A simple table will have a primary key that is an automatically-increasing integer called <code>id</code></li>
-          <li>No two rows (entities) will have the same <code>id</code></li>
-        </ul>
-      </li>
-      <li>Foreign key</li>
-    </ul>
-  </li>
-  <li>Basic Database Design</li>
-  <li>How to work with Databases</li>
-  <li>Software to interact with databases
-    <ul>
-      <li>Rails
-        <ul>
-          <li>DB adapters</li>
-        </ul>
-      </li>
-      <li>ORM
-        <ul>
-          <li>Dynamically reads the tables and their columns and creates SQL queries on the fly</li>
-          <li>The ORM inflates the data from the DB into an object and its attributes</li>
-          <li>This can take a decent bit of time for a complex object with a lot of attributes</li>
-          <li>Some complex or advanced things aren’t always possible, so knowing the SQL you need to write can help you get the job done.</li>
-          <li>Understanding the limits of your tools</li>
-          <li>Still need to understand what the query you want should look like</li>
-          <li>Helps you avoid N+1 query explosions</li>
-          <li>The performance might not be what you need for processing data in bulk</li>
-          <li>Dynamically generating the query is slower than having one hardcoded, but it’s a tradeoff. Hardcoding a query can make your application more fragile to changes in the future, whereas the dynamic queries will update themselves as things change and the ORM picks up those changes. A hardcoded query might refer to a column that was renamed, for instance.</li>
-          <li>This is where something like Sequel is nice, because it gives you the raw data</li>
-        </ul>
-      </li>
-      <li>It is worth doing things the “hard way” first.
-        <ul>
-          <li>You can learn the basics</li>
-          <li>Learn what the libraries solve for you</li>
-          <li>Also learn the limitations of the libraries</li>
-          <li>Know how to get around the limitations when you need to.</li>
-        </ul>
-      </li>
-      <li>Database migrations at the application level</li>
-    </ul>
-  </li>
-  <li>Other
-    <ul>
-      <li>Stored Procedures</li>
-      <li>Join tables</li>
-      <li>Triggers
-        <ul>
-          <li>https://en.wikipedia.org/wiki/Database_trigger</li>
-        </ul>
-      </li>
-      <li>Views</li>
-      <li>Data analytics
-        <ul>
-          <li>Generating reports from the data</li>
-          <li>Running custom queries to answer questions from clients</li>
-        </ul>
-      </li>
-      <li>Data integrity</li>
-    </ul>
-  </li>
-  <li>Scaling
-    <ul>
-      <li>Centralized?
-        <ul>
-          <li>https://en.wikipedia.org/wiki/Centralized_database</li>
-          <li>Good data integrity</li>
-          <li>Bottlenecks with high traffic</li>
-        </ul>
-      </li>
-      <li>Distributed (Mongo)</li>
-      <li>Partitions</li>
-      <li>Self-hosted vs cloud</li>
-    </ul>
-  </li>
-</ul>
-
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<h2 id="database-recap">Database Recap</h2>
-
-<ul>
-  <li>…</li>
-</ul>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<h2 id="other-things-to-think-about">Other things to think about</h2>
-
-<ul>
-  <li>…</li>
-</ul>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<h2 id="whats-next">What’s Next?</h2>
-
-<ul>
-  <li>Where can you learn more?
-    <ul>
-      <li><a href="https://www.pythoncentral.io/sqlalchemy-vs-orms/">Python ORMs</a></li>
-      <li><a href="https://www.khanacademy.org/computing/computer-programming/sql/sql-basics/v/welcome-to-sql">Khan Academy SQL Basics</a></li>
-      <li><a href="https://thomaslarock.com/2015/06/101-things-i-wish-you-knew-about-sql-server/">101 things I wish I knew…</a></li>
-    </ul>
-  </li>
-</ul>
-
-<aside class="notes">
-
-</aside>
-</section>
-<section>
-
-<h2 id="links-to-code">Links to Code</h2>
-
-<ul>
-  <li>…</li>
-</ul>
-
 
 <aside class="notes">
 
